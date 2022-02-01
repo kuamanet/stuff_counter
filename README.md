@@ -23,11 +23,11 @@ samples, guidance on mobile development, and a full API reference.
 - A graph with counts by day/week/month
 
 ## Features
-- a random color generator
-- a color picker: https://www.youtube.com/watch?v=Hum9i9SWXhA&ab_channel=JohannesMilke
-- firebase storage v/s real time database
-- Create a counter with name / color
-- Update a counter count + date
-- [NEXT] remove a count
-- See counts grouped by date: day, week, month
-- navigation between home and graph: https://www.youtube.com/watch?v=g8xGxd99Fgs&ab_channel=KiloLoco
+- [x] a random color generator
+- [ ] a color picker: https://www.youtube.com/watch?v=Hum9i9SWXhA&ab_channel=JohannesMilke
+- [ ] firebase storage v/s real time database
+- [ ] Create a counter with name / color
+- [ ] Update a counter count + date
+- [ ] [NEXT] remove a count
+- [ ] See counts grouped by date: day, week, month
+- [ ] navigation between home and graph: https://www.youtube.com/watch?v=g8xGxd99Fgs&ab_channel=KiloLoco
