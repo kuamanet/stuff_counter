@@ -1,8 +1,6 @@
 import 'package:stuff_counter/counters/entities/counter_log.dart';
 
-class Counter {
-  final String id;
-
+class CounterCreateDto {
   /// The name of the counter
   final String name;
 
@@ -15,11 +13,27 @@ class Counter {
   /// History of increments of this counter
   final List<CounterLog> history;
 
-  Counter({
-    required this.id,
+  CounterCreateDto({
     required this.name,
     required this.count,
     required this.color,
     required this.history,
   });
+}
+
+class CounterReadDto extends CounterCreateDto {
+  final String id;
+
+  CounterReadDto({
+    required this.id,
+    required name,
+    required count,
+    required color,
+    required history,
+  }) : super(
+          name: name,
+          count: count,
+          color: color,
+          history: history,
+        );
 }

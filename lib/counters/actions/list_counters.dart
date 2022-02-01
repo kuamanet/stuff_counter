@@ -2,13 +2,13 @@ import 'package:stuff_counter/counters/core/action.dart';
 import 'package:stuff_counter/counters/core/counters_repository.dart';
 import 'package:stuff_counter/counters/entities/counter.dart';
 
-class ListCounters extends Action<List<Counter>> {
+class ListCounters extends Action<List<CounterReadDto>> {
   final CountersRepository countersRepository;
 
   ListCounters({required this.countersRepository});
 
   @override
-  Future<List<Counter>> run() {
+  Future<List<CounterReadDto>> run() {
     return countersRepository.getAll();
   }
 }
