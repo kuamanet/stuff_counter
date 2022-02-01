@@ -26,7 +26,7 @@ jobs:
       - name: Resolve flutter/dart dependencies
         run: flutter pub get
       - name: Check the format of the code
-        run: find . -name "*.dart" ! -name "*.g.dart" ! -name "env.dart" ! -name "r.dart" ! -name "en.dart" | tr '\n' ' ' | xargs flutter format -l 100 --set-exit-if-changed
+        run: find . -name "*.dart" ! -name "*.g.dart" ! -name "env.dart" ! -name "r.dart" ! -name "en.dart" ! -name "firebase_options.dart" | tr '\n' ' ' | xargs flutter format -l 100 --set-exit-if-changed --help --verbose
       # Run static analysis code
       - name: Analyze the code
         run: flutter analyze --no-fatal-infos
