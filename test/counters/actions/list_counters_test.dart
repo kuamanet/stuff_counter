@@ -14,7 +14,7 @@ void main() {
   });
 
   test("it retrieves all counters", () async {
-    final mockCounter = Counter(
+    final mockCounter = CounterReadDto(
       id: "id",
       name: "name",
       count: 0,

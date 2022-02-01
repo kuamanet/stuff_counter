@@ -10,25 +10,24 @@ class RealTimeCountersRepository implements CountersRepository {
   }
 
   @override
-  Future create(Counter counter) {
-    // TODO: implement create
-    throw UnimplementedError();
+  Future create(CounterCreateDto counter) async {
+    await _ref.push().set(counter);
   }
 
   @override
-  Future<List<Counter>> getAll() {
+  Future<List<CounterReadDto>> getAll() {
     // TODO: implement getAll
     throw UnimplementedError();
   }
 
   @override
-  Future<Counter> getOne(String id) {
+  Future<CounterReadDto> getOne(String id) {
     // TODO: implement getOne
     throw UnimplementedError();
   }
 
   @override
-  Future update(Counter counter) {
+  Future update(CounterReadDto counter) {
     // TODO: implement update
     throw UnimplementedError();
   }

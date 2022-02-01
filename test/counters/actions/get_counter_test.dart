@@ -15,7 +15,7 @@ void main() {
 
   test("it retrieves a counter given its id", () async {
     const id = "1";
-    final mockCounter = Counter(
+    final mockCounter = CounterReadDto(
       id: id,
       name: "name",
       count: 0,
