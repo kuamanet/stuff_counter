@@ -15,9 +15,9 @@ class IncrementCounter extends ParamsAction<String, void> {
     final counter = await getCounterAction.run(params);
 
     final history = counter.history.toList();
-    history.add(CounterLog(createdAt: DateTime.now(), count: counter.count + 1));
+    history.add(CounterLog(createdAt: DateTime.now(), count: 1));
     final increasedCounter = counter.copyWith(
-      count: counter.count + 1,
+      count: history.length,
       history: history.toList(growable: false),
     );
 
