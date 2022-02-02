@@ -4,7 +4,7 @@ on:
     paths: [ '**.dart' ]
 
 jobs:
-  test:
+  integration:
     # The type of machine to run the job on. [windows,macos, ubuntu , self-hosted]
     runs-on: ubuntu-latest
     # Sequence of tasks called
