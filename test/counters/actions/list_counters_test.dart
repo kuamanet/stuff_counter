@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:stuff_counter/counters/actions/list_counters.dart';
-import 'package:stuff_counter/counters/entities/counter.dart';
 
 import '../test_utils.dart';
 
@@ -14,13 +12,7 @@ void main() {
   });
 
   test("it retrieves all counters", () async {
-    final mockCounter = CounterReadDto(
-      id: "id",
-      name: "name",
-      count: 0,
-      color: Colors.amber.toString(),
-      history: [],
-    );
+    final mockCounter = readEmptyCounter();
 
     when(() {
       return repo.getAll();
