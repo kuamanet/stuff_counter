@@ -18,6 +18,7 @@ dependencies:
   firebase_database: ^9.0.6
 
   equatable: ^2.0.3
+  flutter_neumorphic: ^3.2.0
 
   # group counter logs deps start
   collection: ^1.15.0
@@ -27,6 +28,7 @@ dependencies:
 
   # UI deps
   flutter_riverpod: ^1.0.0
+  flutter_colorpicker: ^1.0.3
 
 dev_dependencies:
   flutter_test:
