@@ -8,7 +8,7 @@ import 'package:kcounter/counters/core/action.dart' as counters;
 class GenerateRandomColor extends counters.Action<Color> {
   @override
   Future<Color> run() {
-    var color = Colors.primaries[Random().nextInt(Colors.primaries.length)];
+    var color = Colors.primaries[Random.secure().nextInt(Colors.primaries.length)];
     return Future.value(color);
   }
 }
