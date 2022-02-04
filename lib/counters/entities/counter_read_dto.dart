@@ -42,13 +42,13 @@ class CounterReadDto extends CounterCreateDto {
 
   static CounterReadDto from(Object value, String id) {
     if (value is Map<String, Object?>) {
-      final historyMap = value["history"] as List<Object>;
+      final historyMap = value.containsKey("history") ? value["history"] as List<Object?> : [];
       return CounterReadDto(
           id: id,
           name: value["name"],
           count: value["count"],
           color: value["color"],
-          history: historyMap.map((e) => CounterLog.from(e)).toList());
+          history: historyMap.map((e) => CounterLog.from(Map<String, dynamic>.from(e))).toList());
     }
 
     throw ArgumentError("[CounterReadDto] Cannot parse ${value.toString()} - ${value.runtimeType}");

@@ -2,6 +2,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class CountersSpacing {
   static const double midSpace = 32;
+  static const double bigSpace = 140.0;
   static const double padding900 = 40.0;
   static const double padding300 = 16.0;
   static const double padding600 = 32.0;

@@ -74,7 +74,7 @@ void main() {
 
     when(() {
       return snapshotMock.value;
-    }).thenReturn(entity.toMap());
+    }).thenReturn({entity.id: entity.toMap()});
 
     when(() {
       return snapshotMock.exists;
