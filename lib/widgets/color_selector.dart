@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kcounter/main.dart';
+import 'package:kcounter/riverpod_providers.dart';
 
 class ColorSelector extends StatefulWidget {
   final ValueChanged<Color> onColorChanged;

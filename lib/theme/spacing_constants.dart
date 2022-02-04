@@ -4,10 +4,7 @@ class CountersSpacing {
   static const double midSpace = 32;
   static const double padding900 = 40.0;
   static const double padding300 = 16.0;
-  static const double inputRadius = 12.0;
-
-  static NeumorphicBoxShape countersInputBoxShape =
-      NeumorphicBoxShape.roundRect(BorderRadius.circular(inputRadius));
+  static const double padding600 = 32.0;
 
   static Widget spacer({double? height}) {
     return SizedBox(

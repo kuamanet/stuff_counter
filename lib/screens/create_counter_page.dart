@@ -3,15 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/create_counter.dart';
 import 'package:kcounter/extensions/color.dart';
 import 'package:kcounter/extensions/context.dart';
-import 'package:kcounter/main.dart';
+import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/color_picker_row.dart';
 import 'package:kcounter/widgets/counters_rounded_button.dart';
 import 'package:kcounter/widgets/counters_scaffold.dart';
 import 'package:kcounter/widgets/counters_text_field.dart';
 
-// TODO save counter
-// TODO pop route
 class CreateCounterPage extends ConsumerStatefulWidget {
   const CreateCounterPage({Key? key}) : super(key: key);
 
