@@ -19,17 +19,19 @@ class RealTimeCountersRepository implements CountersRepository {
   }
 
   @override
-  Future<List<CounterReadDto>> getAll() async {
-    final snapshot = await _ref.get();
-    if (snapshot.exists && snapshot.value is Map<dynamic, dynamic>) {
-      final rawList = snapshot.value as Map<dynamic, dynamic>;
-      final items = <CounterReadDto>[];
-      rawList.forEach((key, value) {
-        items.add(CounterReadDto.from(value, key));
-      });
-      return items;
-    }
-    throw ArgumentError("Base collection $_collectionName does not exist");
+  Stream<List<CounterReadDto>> getAll() {
+    return _ref.onValue.map((event) {
+      final snapshot = event.snapshot;
+      if (snapshot.exists && snapshot.value is Map<dynamic, dynamic>) {
+        final rawList = snapshot.value as Map<dynamic, dynamic>;
+        final items = <CounterReadDto>[];
+        rawList.forEach((key, value) {
+          items.add(CounterReadDto.from(value, key));
+        });
+        return items;
+      }
+      throw ArgumentError("Base collection $_collectionName does not exist");
+    });
   }
 
   @override

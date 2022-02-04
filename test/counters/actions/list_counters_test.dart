@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:kcounter/counters/actions/list_counters.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../test_utils.dart';
 
@@ -16,12 +16,18 @@ void main() {
 
     when(() {
       return repo.getAll();
-    }).thenAnswer((_) async => [mockCounter]);
+    }).thenAnswer((_) async* {
+      yield [mockCounter];
+    });
 
     final action = ListCounters(countersRepository: repo);
-    final result = await action.run();
 
-    expect(result, equals([mockCounter]));
+    expect(
+        action.run(),
+        emitsInOrder([
+          equals([mockCounter]),
+          emitsDone
+        ]));
     verify(() => repo.getAll());
   });
 }
