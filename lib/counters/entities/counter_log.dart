@@ -4,7 +4,7 @@ class CounterLog extends Equatable {
   final DateTime createdAt;
   final int count;
 
-  CounterLog({required this.createdAt, required this.count});
+  const CounterLog({required this.createdAt, required this.count});
 
   Map<String, Object?> toMap() {
     return {

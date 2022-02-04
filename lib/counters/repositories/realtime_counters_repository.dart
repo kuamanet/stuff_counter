@@ -26,7 +26,7 @@ class RealTimeCountersRepository implements CountersRepository {
         final rawList = snapshot.value as Map<dynamic, dynamic>;
         final items = <CounterReadDto>[];
         rawList.forEach((key, value) {
-          items.add(CounterReadDto.from(value, key));
+          items.add(CounterReadDto.from(Map<String, dynamic>.from(value), key));
         });
         return items;
       }
@@ -39,7 +39,8 @@ class RealTimeCountersRepository implements CountersRepository {
     final child = _ref.child(id);
     final snapshot = await child.get();
     if (snapshot.exists) {
-      return CounterReadDto.from(snapshot.value!, snapshot.key!);
+      final record = snapshot.value! as Map<dynamic, dynamic>;
+      return CounterReadDto.from(Map<String, dynamic>.from(record[snapshot.key]), snapshot.key!);
     }
 
     throw ArgumentError("Record $id not found");

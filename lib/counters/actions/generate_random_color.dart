@@ -7,8 +7,7 @@ import 'package:kcounter/counters/core/action.dart' as counters;
 /// This is used to prefill counter color field for the user
 class GenerateRandomColor extends counters.Action<Color> {
   @override
-  Future<Color> run() {
-    var color = Colors.primaries[Random.secure().nextInt(Colors.primaries.length)];
-    return Future.value(color);
+  Future<Color> run() async {
+    return Colors.primaries[Random.secure().nextInt(Colors.primaries.length)];
   }
 }

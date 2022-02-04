@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/create_counter.dart';
 import 'package:kcounter/counters/actions/generate_random_color.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
+import 'package:kcounter/counters/actions/increment_counter.dart';
+import 'package:kcounter/counters/actions/list_counters.dart';
 import 'package:kcounter/counters/core/counters_repository.dart';
 import 'package:kcounter/counters/entities/counter_log.dart';
 import 'package:kcounter/counters/repositories/realtime_counters_repository.dart';
@@ -23,7 +25,6 @@ class AppRouteNotifier extends StateNotifier<AppRoute> {
 }
 
 final randomColorActionProvider = StreamProvider.autoDispose<Color>((_) async* {
-  // TODO should return a different value each time is run, to be verified when we navigate from and to the create page
   final action = GenerateRandomColor();
   yield await action.run();
 });
@@ -45,6 +46,18 @@ final createCounterActionProvider = FutureProvider<CreateCounter>((ref) async {
   final countersRepository = await ref.watch(repositoryProvider.future);
 
   return CreateCounter(countersRepository: countersRepository);
+});
+
+final incrementCounterActionProvider = FutureProvider<IncrementCounter>((ref) async {
+  final countersRepository = await ref.watch(repositoryProvider.future);
+
+  return IncrementCounter(countersRepository: countersRepository);
+});
+
+final listCounterActionProvider = FutureProvider<ListCounters>((ref) async {
+  final countersRepository = await ref.watch(repositoryProvider.future);
+
+  return ListCounters(countersRepository: countersRepository);
 });
 
 final counterLogsGrouperProvider =

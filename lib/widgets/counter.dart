@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/extensions/color.dart';
+import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/extensions/counter.dart';
+import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/theme/neumorphic_constants.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counter_graph.dart';
@@ -63,8 +65,20 @@ class _CounterState extends ConsumerState<Counter> {
                   color: Colors.black,
                   padding: const EdgeInsets.all(CountersSpacing.padding300),
                   child: const Icon(Icons.add),
-                  onPressed: () {
-                    // TODO increase counter
+                  onPressed: () async {
+                    try {
+                      final action = await ref.read(incrementCounterActionProvider.future);
+
+                      await action.run(widget.counter.id);
+
+                      final router = ref.read(routeProvider.notifier);
+                      context.snack("Counter was incremented 🚀🚀🚀🚀");
+                      router.toDashboardPage();
+                    } catch (e, s) {
+                      context.snack("Could not increment counter");
+                      print("Exception $e");
+                      // print("StackTrace $s");
+                    }
                   },
                 )
               ],

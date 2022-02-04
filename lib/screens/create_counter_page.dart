@@ -70,8 +70,8 @@ class _CreateCounterPageState extends ConsumerState<CreateCounterPage> {
                 router.toDashboardPage();
               } catch (e, s) {
                 context.snack("Could not create counter");
-                print("Exception $e");
-                print("StackTrace $s");
+                // print("Exception $e");
+                // print("StackTrace $s");
               } finally {
                 setState(() {
                   isLoading = false;
