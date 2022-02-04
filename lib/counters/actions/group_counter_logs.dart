@@ -44,5 +44,5 @@ List<List<CounterLog>> _isolatedGroupBy(GroupCounterLogsParams params) {
         return "${dateFormat.format(log.createdAt)}-${log.createdAt.weekOfYear}";
     }
   });
-  return grouped.values.toList();
+  return grouped.values.toList().sortedBy((element) => element.first.createdAt);
 }
