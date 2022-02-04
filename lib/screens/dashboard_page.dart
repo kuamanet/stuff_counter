@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stuff_counter/main.dart';
+import 'package:kcounter/main.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -12,7 +12,8 @@ class DashboardPage extends ConsumerWidget {
         child: ElevatedButton(
           child: const Text("Create counter"),
           onPressed: () {
-            ref.read(routeProvider.notifier).state = AppRoute.create;
+            final router = ref.read(routeProvider.originProvider);
+            router.toCreatePage();
           },
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stuff_counter/counters/actions/group_counter_logs.dart';
-import 'package:stuff_counter/counters/entities/counter_log.dart';
+import 'package:kcounter/counters/actions/group_counter_logs.dart';
+import 'package:kcounter/counters/entities/counter_log.dart';
 
 void main() {
   final logs = [

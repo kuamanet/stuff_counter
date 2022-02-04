@@ -1,4 +1,4 @@
-name: stuff_counter
+name: kcounter
 description: Flutter app that allows to count things that matter to you.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

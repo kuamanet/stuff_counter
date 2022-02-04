@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
-import 'package:stuff_counter/counters/core/action.dart';
-import 'package:stuff_counter/counters/entities/counter_log.dart';
+import 'package:kcounter/counters/core/action.dart';
+import 'package:kcounter/counters/entities/counter_log.dart';
 import 'package:week_of_year/week_of_year.dart';
 
 enum GroupMode { day, week, month }

@@ -1,19 +1,21 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:stuff_counter/counters/core/counters_repository.dart';
-import 'package:stuff_counter/counters/entities/counter_create_dto.dart';
-import 'package:stuff_counter/counters/entities/counter_read_dto.dart';
+import 'package:kcounter/counters/core/counters_repository.dart';
+import 'package:kcounter/counters/entities/counter_create_dto.dart';
+import 'package:kcounter/counters/entities/counter_read_dto.dart';
 
 class RealTimeCountersRepository implements CountersRepository {
-  final _collectionName = "counters";
+  final _collectionName = "counters/";
   late DatabaseReference _ref;
 
   RealTimeCountersRepository(FirebaseDatabase database) {
+    database.setLoggingEnabled(true);
+    database.setPersistenceEnabled(true);
     _ref = database.ref(_collectionName);
   }
 
   @override
   Future create(CounterCreateDto counter) async {
-    await _ref.push().set(counter);
+    await _ref.push().set(counter.toMap());
   }
 
   @override

@@ -42,7 +42,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "net.kuama.stuff_counter"
+        applicationId "com.kcounter.aapp"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

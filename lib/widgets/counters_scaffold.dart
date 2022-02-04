@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stuff_counter/theme/spacing_constants.dart';
+import 'package:kcounter/theme/spacing_constants.dart';
 
 class CountersScaffold extends StatelessWidget {
   Widget? child;

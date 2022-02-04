@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:stuff_counter/counters/repositories/realtime_counters_repository.dart';
+import 'package:kcounter/counters/repositories/realtime_counters_repository.dart';
 
 import '../test_utils.dart';
 

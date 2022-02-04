@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stuff_counter/main.dart';
+import 'package:kcounter/main.dart';
 
 class ColorSelector extends StatefulWidget {
   final ValueChanged<Color> onColorChanged;
@@ -26,6 +26,7 @@ class _ColorSelectorState extends State<ColorSelector> {
     return Consumer(
       builder: (context, ref, child) {
         final resolvedColor = _resolveColor(ref);
+        resolvedColor.whenData((value) => widget.onColorChanged(value));
         return GestureDetector(
           onTap: () {
             _changeColor(context, resolvedColor);

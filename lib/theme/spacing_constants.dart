@@ -5,7 +5,6 @@ class CountersSpacing {
   static const double padding900 = 40.0;
   static const double padding300 = 16.0;
   static const double inputRadius = 12.0;
-  static const double neumorphicDepth = 16.0;
 
   static NeumorphicBoxShape countersInputBoxShape =
       NeumorphicBoxShape.roundRect(BorderRadius.circular(inputRadius));

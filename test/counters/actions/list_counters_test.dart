@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:stuff_counter/counters/actions/list_counters.dart';
+import 'package:kcounter/counters/actions/list_counters.dart';
 
 import '../test_utils.dart';
 

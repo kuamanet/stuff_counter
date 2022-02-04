@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:stuff_counter/counters/actions/increment_counter.dart';
-import 'package:stuff_counter/counters/entities/counter_read_dto.dart';
+import 'package:kcounter/counters/actions/increment_counter.dart';
+import 'package:kcounter/counters/entities/counter_read_dto.dart';
 
 import '../test_utils.dart';
 

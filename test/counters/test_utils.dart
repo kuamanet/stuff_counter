@@ -1,10 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:stuff_counter/counters/core/counters_repository.dart';
-import 'package:stuff_counter/counters/entities/counter_create_dto.dart';
-import 'package:stuff_counter/counters/entities/counter_log.dart';
-import 'package:stuff_counter/counters/entities/counter_read_dto.dart';
+import 'package:kcounter/counters/core/counters_repository.dart';
+import 'package:kcounter/counters/entities/counter_create_dto.dart';
+import 'package:kcounter/counters/entities/counter_log.dart';
+import 'package:kcounter/counters/entities/counter_read_dto.dart';
 
 class CounterRepositoryMock extends Mock implements CountersRepository {}
 
