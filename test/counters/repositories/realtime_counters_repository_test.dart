@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:kcounter/counters/repositories/realtime_counters_repository.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../test_utils.dart';
 
@@ -103,7 +103,12 @@ void main() {
     final entity2 = readEmptyCounter(id: "id2");
 
     // mock the get call
+    final event = DatabaseEventMock();
     final snapshotMock = DataSnapshotMock();
+
+    when(() {
+      return event.snapshot;
+    }).thenReturn(snapshotMock);
 
     when(() {
       return snapshotMock.value;
@@ -117,13 +122,16 @@ void main() {
     }).thenReturn(true);
 
     when(() {
-      return ref.get();
-    }).thenAnswer((_) async => snapshotMock);
+      return ref.onValue;
+    }).thenAnswer((_) async* {
+      yield event;
+    });
 
-    final result = await repo.getAll();
-
-    expect(result, equals([entity, entity2]));
-
-    verify(() => ref.get());
+    expect(
+        repo.getAll(),
+        emitsInOrder([
+          [entity, entity2],
+          emitsDone
+        ]));
   });
 }
