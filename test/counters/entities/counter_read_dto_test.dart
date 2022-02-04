@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stuff_counter/counters/entities/counter_read_dto.dart';
+import 'package:kcounter/counters/entities/counter_read_dto.dart';
 
 import '../test_utils.dart';
 

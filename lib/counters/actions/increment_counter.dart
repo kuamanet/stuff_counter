@@ -1,7 +1,7 @@
-import 'package:stuff_counter/counters/actions/get_counter.dart';
-import 'package:stuff_counter/counters/core/action.dart';
-import 'package:stuff_counter/counters/core/counters_repository.dart';
-import 'package:stuff_counter/counters/entities/counter_log.dart';
+import 'package:kcounter/counters/actions/get_counter.dart';
+import 'package:kcounter/counters/core/action.dart';
+import 'package:kcounter/counters/core/counters_repository.dart';
+import 'package:kcounter/counters/entities/counter_log.dart';
 
 class IncrementCounter extends ParamsAction<String, void> {
   final CountersRepository countersRepository;

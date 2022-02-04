@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kcounter/counters/actions/create_counter.dart';
+import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:stuff_counter/counters/actions/create_counter.dart';
-import 'package:stuff_counter/counters/entities/counter_read_dto.dart';
 
 import '../test_utils.dart';
 
@@ -26,7 +26,7 @@ void main() {
     }).thenAnswer((_) => Future.value());
 
     final action = CreateCounter(countersRepository: repo);
-    await action.run(mockCounter);
+    await action.run(CreateCounterParams(name: mockCounter.name, color: mockCounter.color));
 
     verify(() => repo.create(mockCounter));
   });

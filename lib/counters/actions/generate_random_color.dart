@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:stuff_counter/counters/core/action.dart' as counters;
+import 'package:kcounter/counters/core/action.dart' as counters;
 
 /// Generates a random color
 /// This is used to prefill counter color field for the user

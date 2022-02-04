@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:stuff_counter/theme/spacing_constants.dart';
+import 'package:kcounter/theme/neuorphic_constants.dart';
+import 'package:kcounter/theme/spacing_constants.dart';
 
 class CountersTextField extends StatelessWidget {
   final String hintText;
@@ -13,7 +14,7 @@ class CountersTextField extends StatelessWidget {
       style: NeumorphicStyle(
         shape: NeumorphicShape.concave,
         boxShape: CountersSpacing.countersInputBoxShape,
-        depth: CountersSpacing.neumorphicDepth,
+        depth: NeumorphicConstants.neumorphicDepth,
         lightSource: LightSource.topLeft,
       ),
       child: TextField(

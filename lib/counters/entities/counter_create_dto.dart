@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:stuff_counter/counters/core/copyable.dart';
-import 'package:stuff_counter/counters/entities/counter_log.dart';
+import 'package:kcounter/counters/core/copyable.dart';
+import 'package:kcounter/counters/entities/counter_log.dart';
 
 class CounterCreateDto extends Equatable implements Copyable<CounterCreateDto> {
   /// The name of the counter
@@ -41,5 +41,14 @@ class CounterCreateDto extends Equatable implements Copyable<CounterCreateDto> {
       color: color ?? this.color,
       history: history ?? this.history,
     );
+  }
+
+  Map<String, Object?> toMap() {
+    return {
+      "count": count,
+      "name": name,
+      "color": color,
+      "history": history.map((e) => e.toMap()).toList(),
+    };
   }
 }

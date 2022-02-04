@@ -1,5 +1,5 @@
-import 'package:stuff_counter/counters/entities/counter_create_dto.dart';
-import 'package:stuff_counter/counters/entities/counter_log.dart';
+import 'package:kcounter/counters/entities/counter_create_dto.dart';
+import 'package:kcounter/counters/entities/counter_log.dart';
 
 class CounterReadDto extends CounterCreateDto {
   final String id;
@@ -29,6 +29,7 @@ class CounterReadDto extends CounterCreateDto {
     );
   }
 
+  @override
   Map<String, Object?> toMap() {
     return {
       "id": id,
