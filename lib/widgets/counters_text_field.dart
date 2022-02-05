@@ -14,6 +14,7 @@ class CountersTextField extends StatelessWidget {
       style: NeumorphicStyle(
         shape: NeumorphicShape.concave,
         boxShape: NeumorphicConstants.boxShape,
+        color: Colors.white,
         depth: NeumorphicConstants.neumorphicDepth,
         lightSource: LightSource.topLeft,
       ),

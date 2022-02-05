@@ -6,28 +6,31 @@ import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/extensions/counter_log.dart';
 import 'package:kcounter/riverpod_providers.dart';
 
-class CounterGraph extends ConsumerStatefulWidget {
+class CounterChart extends ConsumerStatefulWidget {
   final CounterReadDto counter;
   final GroupMode mode;
   final Color color;
+  final bool? hideAxis;
+  final String? id;
 
-  const CounterGraph({
-    Key? key,
-    required this.counter,
-    required this.mode,
-    required this.color,
-  }) : super(key: key);
+  const CounterChart(
+      {Key? key,
+      required this.counter,
+      required this.mode,
+      required this.color,
+      this.hideAxis,
+      this.id})
+      : super(key: key);
 
   @override
-  ConsumerState<CounterGraph> createState() => _CounterGraphState();
+  ConsumerState<CounterChart> createState() => _CounterChartState();
 }
 
-class _CounterGraphState extends ConsumerState<CounterGraph> {
+class _CounterChartState extends ConsumerState<CounterChart> {
   @override
   void initState() {
     final grouper = ref.read(counterLogsGrouperProvider.notifier);
 
-    print("Triggering grouping");
     grouper.group(CounterLogsGrouperParams(counter: widget.counter, mode: widget.mode));
     super.initState();
   }
@@ -35,21 +38,27 @@ class _CounterGraphState extends ConsumerState<CounterGraph> {
   @override
   Widget build(BuildContext context) {
     final groupedLogs = ref.watch(counterLogsGrouperProvider);
-    print("${widget.counter.name} ${groupedLogs[widget.counter.id]?.length} logs");
+
     return chart.TimeSeriesChart(
       [
+        // TODO how to set line width / can it be rounded on the edges?
         chart.Series<LineChartData, DateTime>(
           colorFn: (_, __) => chart.ColorUtil.fromDartColor(widget.color),
           id: "history_graph",
-          domainFn: (log, index) => log.date,
+          domainFn: (log, index) =>
+              log.date, // todo check mode and format date: the month, the week, the day
           measureFn: (log, index) => log.count,
-          data: groupedLogs[widget.counter.id] ?? [],
+          data: groupedLogs[widget.id ?? widget.counter.id] ?? [],
         )
       ],
       animate: true,
-      defaultInteractions: false,
-      primaryMeasureAxis: const chart.NumericAxisSpec(renderSpec: chart.NoneRenderSpec()),
-      domainAxis: const chart.DateTimeAxisSpec(renderSpec: chart.NoneRenderSpec()),
+      defaultInteractions: !(widget.hideAxis == true),
+      primaryMeasureAxis: (widget.hideAxis == true)
+          ? const chart.NumericAxisSpec(renderSpec: chart.NoneRenderSpec())
+          : null,
+      domainAxis: (widget.hideAxis == true)
+          ? const chart.DateTimeAxisSpec(renderSpec: chart.NoneRenderSpec())
+          : null,
     );
   }
 }

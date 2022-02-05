@@ -36,6 +36,7 @@ class RealTimeCountersRepository implements CountersRepository {
 
   @override
   Future<CounterReadDto> getOne(String id) async {
+    // todo this should be a stream
     final child = _ref.child(id);
     final snapshot = await child.get();
     if (snapshot.exists) {

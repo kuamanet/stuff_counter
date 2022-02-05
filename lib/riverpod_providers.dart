@@ -15,16 +15,19 @@ import 'package:kcounter/counters/repositories/realtime_counters_repository.dart
 import 'package:kcounter/extensions/counter_log.dart';
 import 'package:kcounter/firebase_options.dart';
 
-enum AppRoute { dashboard, create, graph }
+import 'navigation/app_route.dart';
 
 final routeProvider =
     StateNotifierProvider.autoDispose<AppRouteNotifier, AppRoute>((_) => AppRouteNotifier());
 
 class AppRouteNotifier extends StateNotifier<AppRoute> {
-  AppRouteNotifier() : super(AppRoute.dashboard);
-  void toCreatePage() => state = AppRoute.create;
-  void toDashboardPage() => state = AppRoute.dashboard;
-  void toGraphPage() => state = AppRoute.graph;
+  AppRouteNotifier() : super(const AppRoute(name: AppRouteName.dashboard));
+  void toCreatePage() => state = const AppRoute(name: AppRouteName.create);
+  void toDashboardPage() => state = const AppRoute(name: AppRouteName.dashboard);
+  void toGraphPage(CounterReadDto counter) => state = AppRoute(
+        name: AppRouteName.graph,
+        currentCounter: counter,
+      );
 }
 
 final randomColorActionProvider = StreamProvider.autoDispose<Color>((_) async* {
@@ -78,10 +81,12 @@ final counterLogsGrouperProvider =
 class CounterLogsGrouperParams {
   final CounterReadDto counter;
   final GroupMode mode;
+  final String? id;
 
   const CounterLogsGrouperParams({
     required this.counter,
     required this.mode,
+    this.id,
   });
 }
 
@@ -89,10 +94,11 @@ class CounterLogsGrouper extends StateNotifier<Map<String, List<LineChartData>>>
   CounterLogsGrouper() : super({});
   void group(CounterLogsGrouperParams params) async {
     final action = GroupCounterLogs();
-    final counterId = params.counter.id;
+    final counterId = params.id ?? params.counter.id;
     final mode = params.mode;
-    final logs = params.counter.history;
-    final groupedLogs = await action.run(GroupCounterLogsParams(logs: logs, groupMode: mode));
+    // final logs = params.counter.history;
+    final groupedLogs =
+        await action.run(GroupCounterLogsParams(logs: params.counter.history, groupMode: mode));
     state[counterId] = groupedLogs.asGraphData;
     state = Map.of(state);
   }

@@ -1,36 +1,42 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-class CountersRoundedButton extends StatefulWidget {
+class CountersIconButton extends StatefulWidget {
   final EdgeInsets? padding;
   final IconData icon;
   final bool? loading;
   final void Function()? onPressed;
-  const CountersRoundedButton({
+  final Color? color;
+  final Color? background;
+  const CountersIconButton({
     Key? key,
+    required this.icon,
     this.padding,
+    this.color,
+    this.background,
     this.onPressed,
     this.loading,
-    required this.icon,
   }) : super(key: key);
 
   @override
-  State<CountersRoundedButton> createState() => _CountersRoundedButtonState();
+  State<CountersIconButton> createState() => _CountersIconButtonState();
 }
 
-class _CountersRoundedButtonState extends State<CountersRoundedButton> {
+class _CountersIconButtonState extends State<CountersIconButton> {
   @override
   Widget build(BuildContext context) {
     return NeumorphicButton(
       onPressed: widget.onPressed,
-      style: const NeumorphicStyle(
+      style: NeumorphicStyle(
+        color: widget.background ?? Colors.white,
         shape: NeumorphicShape.flat,
-        boxShape: NeumorphicBoxShape.circle(),
+        boxShape: const NeumorphicBoxShape.circle(),
       ),
       padding: widget.padding,
       child: widget.loading == true
           ? const CircularProgressIndicator()
           : Icon(
               widget.icon,
+              color: widget.color,
             ),
     );
   }
