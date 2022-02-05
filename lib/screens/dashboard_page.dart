@@ -5,15 +5,12 @@ import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counters_list.dart';
 import 'package:kcounter/widgets/counters_rounded_button.dart';
 
-// final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      // key: _scaffoldKey,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: CountersRoundedButton(
         icon: Icons.add,

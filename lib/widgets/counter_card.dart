@@ -11,15 +11,15 @@ import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counter_graph.dart';
 
 // TODO can this be stateless?
-class Counter extends ConsumerStatefulWidget {
+class CounterCard extends ConsumerStatefulWidget {
   final CounterReadDto counter;
-  const Counter({Key? key, required this.counter}) : super(key: key);
+  const CounterCard({Key? key, required this.counter}) : super(key: key);
 
   @override
-  ConsumerState<Counter> createState() => _CounterState();
+  ConsumerState<CounterCard> createState() => _CounterState();
 }
 
-class _CounterState extends ConsumerState<Counter> {
+class _CounterState extends ConsumerState<CounterCard> {
   @override
   Widget build(BuildContext context) {
     final mainColor = ColorExtension.fromCounterColor(widget.counter.color);
@@ -94,7 +94,7 @@ class _CounterState extends ConsumerState<Counter> {
                   },
                   child: CounterGraph(
                     color: mainColor,
-                    logs: widget.counter.history,
+                    counter: widget.counter,
                     mode: GroupMode.day,
                   ),
                 ))
