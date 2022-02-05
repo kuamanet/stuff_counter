@@ -35,6 +35,11 @@ class CountersApp extends ConsumerWidget {
           if (currentRoute == AppRoute.create) const MaterialPage(child: CreateCounterPage())
         ],
         onPopPage: (route, result) {
+          // this runs each time the user hits the back button
+          // we need to sync our route state here.
+          // since we have a simple 1 depth structure (home -> subpage)
+          // if user is going back, he can only go to the dashboard
+          ref.read(routeProvider.notifier).toDashboardPage();
           return route.didPop(result);
         },
       ),

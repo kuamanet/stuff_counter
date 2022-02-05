@@ -4,7 +4,7 @@ import 'package:kcounter/counters/actions/list_counters.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
-import 'package:kcounter/widgets/counter.dart';
+import 'package:kcounter/widgets/counter_card.dart';
 
 class CountersList extends ConsumerWidget {
   const CountersList({Key? key}) : super(key: key);
@@ -29,7 +29,7 @@ class CountersList extends ConsumerWidget {
               return const SizedBox.shrink();
             }
 
-            var counters = countersSnapshot.data?.map((e) => Counter(counter: e)) ?? [];
+            var counters = countersSnapshot.data?.map((e) => CounterCard(counter: e)) ?? [];
 
             return SingleChildScrollView(
               child: Padding(
