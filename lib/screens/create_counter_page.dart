@@ -6,7 +6,7 @@ import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/color_picker_row.dart';
-import 'package:kcounter/widgets/counters_rounded_button.dart';
+import 'package:kcounter/widgets/counters_icon_button.dart';
 import 'package:kcounter/widgets/counters_scaffold.dart';
 import 'package:kcounter/widgets/counters_text_field.dart';
 
@@ -41,7 +41,7 @@ class _CreateCounterPageState extends ConsumerState<CreateCounterPage> {
             counterColor = color;
           }),
           const Spacer(flex: 1),
-          CountersRoundedButton(
+          CountersIconButton(
             onPressed: () async {
               if (nameController.text.isEmpty) {
                 context.snack("Name is required");

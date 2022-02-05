@@ -8,21 +8,15 @@ import 'package:kcounter/extensions/counter.dart';
 import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/theme/neumorphic_constants.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
-import 'package:kcounter/widgets/counter_graph.dart';
+import 'package:kcounter/widgets/counter_chart.dart';
 
-// TODO can this be stateless?
-class CounterCard extends ConsumerStatefulWidget {
+class CounterCard extends ConsumerWidget {
   final CounterReadDto counter;
   const CounterCard({Key? key, required this.counter}) : super(key: key);
 
   @override
-  ConsumerState<CounterCard> createState() => _CounterState();
-}
-
-class _CounterState extends ConsumerState<CounterCard> {
-  @override
-  Widget build(BuildContext context) {
-    final mainColor = ColorExtension.fromCounterColor(widget.counter.color);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mainColor = ColorExtension.fromCounterColor(counter.color);
 
     return Neumorphic(
       style: NeumorphicStyle(
@@ -42,18 +36,18 @@ class _CounterState extends ConsumerState<CounterCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.counter.lastUpdate,
+                      counter.lastUpdate,
                       style: TextStyle(color: mainColor.withOpacity(0.4)),
                     ),
                     Text(
-                      widget.counter.count.toString(),
+                      counter.count.toString(),
                       style: Theme.of(context)
                           .textTheme
                           .headline3
                           ?.copyWith(color: mainColor, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      widget.counter.name,
+                      counter.name,
                       style: TextStyle(color: mainColor.withOpacity(0.4)),
                     ),
                   ],
@@ -64,12 +58,12 @@ class _CounterState extends ConsumerState<CounterCard> {
                   textColor: Colors.white,
                   color: Colors.black,
                   padding: const EdgeInsets.all(CountersSpacing.padding300),
-                  child: const Icon(Icons.add),
+                  child: const Icon(Icons.arrow_upward),
                   onPressed: () async {
                     try {
                       final action = await ref.read(incrementCounterActionProvider.future);
 
-                      await action.run(widget.counter.id);
+                      await action.run(counter.id);
 
                       final router = ref.read(routeProvider.notifier);
                       context.snack("Counter was incremented 🚀🚀🚀🚀");
@@ -90,12 +84,13 @@ class _CounterState extends ConsumerState<CounterCard> {
                 height: 100,
                 child: GestureDetector(
                   onTap: () {
-                    // TODO go to graph
+                    ref.read(routeProvider.notifier).toGraphPage(counter);
                   },
-                  child: CounterGraph(
+                  child: CounterChart(
                     color: mainColor,
-                    counter: widget.counter,
+                    counter: counter,
                     mode: GroupMode.day,
+                    hideAxis: true,
                   ),
                 ))
           ],
