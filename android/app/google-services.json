@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "544972692002",
+    "firebase_url": "https://stuff-counter-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "stuff-counter",
+    "storage_bucket": "stuff-counter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544972692002:android:e7fe203e56f7d6898e087b",
+        "android_client_info": {
+          "package_name": "com.kcounter.aapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "544972692002-c7lqqoeagbmc9c5af4knasvp08aq3pga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvgcUZXWb9OwAo1MjKXdEf7EJWcbj2c0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "544972692002-c7lqqoeagbmc9c5af4knasvp08aq3pga.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "544972692002-8p565hv8dt84514ren2l8r6pfd840jef.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kcounter.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
