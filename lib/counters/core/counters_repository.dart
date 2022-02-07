@@ -6,4 +6,5 @@ abstract class CountersRepository {
   Future<void> update(CounterReadDto counter);
   Stream<List<CounterReadDto>> getAll();
   Future<CounterReadDto> getOne(String id);
+  Future<void> delete(String id);
 }
