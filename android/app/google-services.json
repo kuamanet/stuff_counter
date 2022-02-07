@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:544972692002:android:e7fe203e56f7d6898e087b",
+        "mobilesdk_app_id": "1:544972692002:android:1bc1fcf9a6a7b1348e087b",
         "android_client_info": {
-          "package_name": "com.kcounter.aapp"
+          "package_name": "com.kcounter.app"
         }
       },
       "oauth_client": [
