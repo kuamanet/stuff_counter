@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/extensions/color.dart';
+import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/extensions/counter.dart';
 import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
@@ -19,9 +20,33 @@ class CounterChartPage extends ConsumerStatefulWidget {
 class _CounterChartPageState extends ConsumerState<CounterChartPage> {
   GroupMode currentMode = GroupMode.month;
 
+  Widget cancelDeleteBtn = TextButton(
+    child: const Text("Cancel"),
+    onPressed: () {},
+  );
+
+  late Widget confirmDeleteBtn;
+
+  late AlertDialog alert;
+
   @override
   void initState() {
     _setCurrentGroupMode(currentMode);
+
+    confirmDeleteBtn = ElevatedButton(
+      child: const Text("Yes, I'm sure, delete this counter!"),
+      onPressed: () => _deleteCounter(),
+    );
+
+    alert = AlertDialog(
+      title: const Text("Destructive action"),
+      content: const Text("This will remove your counter and its history, are you sure?"),
+      actions: [
+        cancelDeleteBtn,
+        confirmDeleteBtn,
+      ],
+    );
+
     super.initState();
   }
 
@@ -77,30 +102,9 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
               Wrap(
                 alignment: WrapAlignment.spaceAround,
                 children: [
-                  CountersButton(
-                    text: "By month",
-                    background: currentMode == GroupMode.month ? Colors.black : Colors.white,
-                    color: currentMode == GroupMode.month ? Colors.white : Colors.black,
-                    onPressed: () {
-                      _setCurrentGroupMode(GroupMode.month);
-                    },
-                  ),
-                  CountersButton(
-                    text: "By week",
-                    background: currentMode == GroupMode.week ? Colors.black : Colors.white,
-                    color: currentMode == GroupMode.week ? Colors.white : Colors.black,
-                    onPressed: () {
-                      _setCurrentGroupMode(GroupMode.week);
-                    },
-                  ),
-                  CountersButton(
-                    text: "By day",
-                    background: currentMode == GroupMode.day ? Colors.black : Colors.white,
-                    color: currentMode == GroupMode.day ? Colors.white : Colors.black,
-                    onPressed: () {
-                      _setCurrentGroupMode(GroupMode.day);
-                    },
-                  ),
+                  _counterButtonFor(GroupMode.month),
+                  _counterButtonFor(GroupMode.day),
+                  _counterButtonFor(GroupMode.week),
                 ],
               ),
               const SizedBox(height: CountersSpacing.midSpace),
@@ -112,6 +116,26 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
                   color: mainColor,
                   id: "chart",
                 ),
+              ),
+              const SizedBox(
+                height: 80,
+              ),
+              CountersButton(
+                text: "Delete",
+                background: Colors.redAccent,
+                color: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  vertical: CountersSpacing.padding300,
+                  horizontal: CountersSpacing.padding300,
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return alert;
+                    },
+                  );
+                },
               ),
             ],
           ),
@@ -139,6 +163,50 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
       setState(() {
         currentMode = mode;
       });
+    }
+  }
+
+  Widget _counterButtonFor(GroupMode mode) {
+    String label;
+    switch (mode) {
+      case GroupMode.day:
+        label = "By day";
+        break;
+      case GroupMode.week:
+        label = "By week";
+        break;
+      case GroupMode.month:
+        label = "By month";
+        break;
+    }
+    return CountersButton(
+      text: label,
+      background: currentMode == mode ? Colors.black : Colors.white,
+      color: currentMode == mode ? Colors.white : Colors.black,
+      onPressed: () {
+        _setCurrentGroupMode(mode);
+      },
+    );
+  }
+
+  void _deleteCounter() async {
+    try {
+      final counter = ref.read(routeProvider).currentCounter;
+      if (counter == null) {
+        return;
+      }
+      final action = await ref.read(deleteCounterActionProvider.future);
+
+      await action.run(counter.id);
+
+      final router = ref.read(routeProvider.notifier);
+      context.snack("Counter was deleted");
+      Navigator.of(context, rootNavigator: true).pop();
+      router.toDashboardPage();
+    } catch (e, s) {
+      context.snack("Could not delete counter");
+      // print("Exception $e");
+      // print("StackTrace $s");
     }
   }
 }
