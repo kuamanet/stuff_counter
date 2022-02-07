@@ -38,6 +38,7 @@ class _CountersButtonState extends State<CountersButton> {
         style: TextStyle(
           color: widget.color,
         ),
+        textAlign: TextAlign.center,
       ),
     );
   }
