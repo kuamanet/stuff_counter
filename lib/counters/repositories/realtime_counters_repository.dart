@@ -52,4 +52,10 @@ class RealTimeCountersRepository implements CountersRepository {
     final record = _ref.child(counter.id);
     await record.update(counter.toMap());
   }
+
+  @override
+  delete(String id) async {
+    final record = _ref.child(id);
+    await record.remove();
+  }
 }

@@ -62,6 +62,27 @@ void main() {
     ]);
   });
 
+  test("it deletes a counter by id", () async {
+    final entity = readEmptyCounter();
+
+    // mock the get by id call
+    when(() {
+      return ref.child(any());
+    }).thenReturn(ref);
+
+    // mock the delete call
+    when(() {
+      return ref.remove();
+    }).thenAnswer((_) => Future.value());
+
+    await repo.delete(entity.id);
+
+    verifyInOrder([
+      () => ref.child(entity.id),
+      () => ref.remove(),
+    ]);
+  });
+
   test("it returns a counter by id", () async {
     final entity = readEmptyCounter();
 
