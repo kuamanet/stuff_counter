@@ -26,7 +26,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
     }
 
     throw UnsupportedError(
@@ -47,7 +50,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCvgcUZXWb9OwAo1MjKXdEf7EJWcbj2c0Y',
-    appId: '1:544972692002:android:e7fe203e56f7d6898e087b',
+    appId: '1:544972692002:android:1bc1fcf9a6a7b1348e087b',
     messagingSenderId: '544972692002',
     projectId: 'stuff-counter',
     databaseURL: 'https://stuff-counter-default-rtdb.europe-west1.firebasedatabase.app',
@@ -55,17 +58,6 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCCErpIQgGywodisdZZwE4oMU1Z07-yHog',
-    appId: '1:544972692002:ios:7b2e267bd4d2a3dd8e087b',
-    messagingSenderId: '544972692002',
-    projectId: 'stuff-counter',
-    databaseURL: 'https://stuff-counter-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'stuff-counter.appspot.com',
-    iosClientId: '544972692002-8p565hv8dt84514ren2l8r6pfd840jef.apps.googleusercontent.com',
-    iosBundleId: 'com.kcounter.app',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCCErpIQgGywodisdZZwE4oMU1Z07-yHog',
     appId: '1:544972692002:ios:7b2e267bd4d2a3dd8e087b',
     messagingSenderId: '544972692002',
