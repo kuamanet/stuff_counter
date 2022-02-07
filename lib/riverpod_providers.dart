@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/create_counter.dart';
+import 'package:kcounter/counters/actions/delete_counter.dart';
 import 'package:kcounter/counters/actions/generate_random_color.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/counters/actions/increment_counter.dart';
@@ -72,6 +73,12 @@ final listCounterActionProvider = FutureProvider<ListCounters>((ref) async {
   final countersRepository = await ref.watch(repositoryProvider.future);
 
   return ListCounters(countersRepository: countersRepository);
+});
+
+final deleteCounterActionProvider = FutureProvider<DeleteCounter>((ref) async {
+  final countersRepository = await ref.watch(repositoryProvider.future);
+
+  return DeleteCounter(countersRepository: countersRepository);
 });
 
 final counterLogsGrouperProvider =
