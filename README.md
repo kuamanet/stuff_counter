@@ -1,4 +1,5 @@
 # kcounter
+[![Codemagic build status](https://api.codemagic.io/apps/61ffb983ce9590f8cc27fb25/61ffb983ce9590f8cc27fb24/status_badge.svg)](https://codemagic.io/apps/61ffb983ce9590f8cc27fb25/61ffb983ce9590f8cc27fb24/latest_build)
 
 A Flutter app that allows to count things that matter to you.
 
