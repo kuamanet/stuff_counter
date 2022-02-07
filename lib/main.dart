@@ -23,7 +23,7 @@ class CountersApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: const ColorScheme.light(primary: Colors.black),
         appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
       ),
       home: const AppNavigator(),
