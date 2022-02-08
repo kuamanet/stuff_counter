@@ -4,11 +4,18 @@ import 'package:kcounter/counters/core/counters_repository.dart';
 import 'package:kcounter/counters/entities/counter_create_dto.dart';
 import 'package:kcounter/counters/entities/counter_log.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
+import 'package:localstore/localstore.dart';
 import 'package:mocktail/mocktail.dart';
 
 class CounterRepositoryMock extends Mock implements CountersRepository {}
 
 class FirebaseDatabaseMock extends Mock implements FirebaseDatabase {}
+
+class LocalDatabaseMock extends Mock implements Localstore {}
+
+class CollectionRefMock extends Mock implements CollectionRef {}
+
+class DocumentRefMock extends Mock implements DocumentRef {}
 
 class DataSnapshotMock extends Mock implements DataSnapshot {}
 
