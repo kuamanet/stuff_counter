@@ -18,7 +18,14 @@ class SettingsDto extends Equatable {
     };
   }
 
-  static from(Map<String, dynamic> map) {
+  SettingsDto copyWith({bool? online, bool? authenticated}) {
+    return SettingsDto(
+      online: online ?? this.online,
+      authenticated: authenticated ?? this.authenticated,
+    );
+  }
+
+  static SettingsDto from(Map<String, dynamic> map) {
     if (map.keys.isNotEmpty) {
       return SettingsDto(
         online: map.containsKey("online") ? map["online"] as bool : false,
@@ -27,6 +34,10 @@ class SettingsDto extends Equatable {
     }
 
     // If no local settings, presume we are offline
+    return defaultValue();
+  }
+
+  static SettingsDto defaultValue() {
     return const SettingsDto(online: false, authenticated: false);
   }
 }

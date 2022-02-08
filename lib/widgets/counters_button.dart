@@ -1,4 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 
 class CountersButton extends StatefulWidget {
@@ -7,6 +8,7 @@ class CountersButton extends StatefulWidget {
   final void Function() onPressed;
   final Color? background;
   final Color? color;
+  final String? icon;
 
   const CountersButton({
     Key? key,
@@ -15,6 +17,7 @@ class CountersButton extends StatefulWidget {
     this.padding,
     this.background,
     this.color,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -24,6 +27,13 @@ class CountersButton extends StatefulWidget {
 class _CountersButtonState extends State<CountersButton> {
   @override
   Widget build(BuildContext context) {
+    final text = Text(
+      widget.text.toUpperCase(),
+      style: TextStyle(
+        color: widget.color,
+      ),
+      textAlign: TextAlign.center,
+    );
     return NeumorphicButton(
       onPressed: widget.onPressed,
       style: NeumorphicStyle(
@@ -33,13 +43,20 @@ class _CountersButtonState extends State<CountersButton> {
             const BorderRadius.all(Radius.circular(CountersSpacing.padding300))),
       ),
       padding: widget.padding,
-      child: Text(
-        widget.text,
-        style: TextStyle(
-          color: widget.color,
-        ),
-        textAlign: TextAlign.center,
-      ),
+      child: widget.icon != null
+          ? Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SvgPicture.asset(
+                  widget.icon!,
+                  semanticsLabel: widget.text,
+                  height: CountersSpacing.midSpace,
+                ),
+                text
+              ],
+            )
+          : text,
     );
   }
 }

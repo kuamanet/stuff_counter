@@ -5,6 +5,7 @@ import 'package:kcounter/navigation/navigator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
   runApp(const ProviderScope(
     child: CountersApp(),
@@ -22,9 +23,6 @@ class CountersApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       theme: ThemeData(
         colorScheme: const ColorScheme.light(primary: Colors.black),
-        appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-        ),
       ),
       home: const AppNavigator(),
     );

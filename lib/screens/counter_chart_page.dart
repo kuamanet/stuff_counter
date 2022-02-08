@@ -3,12 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/extensions/color.dart';
 import 'package:kcounter/extensions/context.dart';
-import 'package:kcounter/extensions/counter.dart';
 import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
+import 'package:kcounter/widgets/counter_back_button.dart';
 import 'package:kcounter/widgets/counter_chart.dart';
+import 'package:kcounter/widgets/counter_details.dart';
 import 'package:kcounter/widgets/counters_button.dart';
-import 'package:kcounter/widgets/counters_icon_button.dart';
+import 'package:kcounter/widgets/group_mode_button.dart';
 
 class CounterChartPage extends ConsumerStatefulWidget {
   const CounterChartPage({Key? key}) : super(key: key);
@@ -70,41 +71,32 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
-                children: [
-                  CountersIconButton(
-                    color: Colors.white,
-                    background: Colors.black,
-                    icon: Icons.arrow_back,
-                    onPressed: () {
-                      final router = ref.read(routeProvider.notifier);
-                      router.toDashboardPage();
-                    },
-                  ),
+                children: const [
+                  CounterBackButton(),
                 ],
               ),
               const SizedBox(height: CountersSpacing.midSpace),
-              Text(
-                counter.lastUpdate,
-                style: TextStyle(color: mainColor.withOpacity(0.4)),
-              ),
-              Text(
-                counter.count.toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3
-                    ?.copyWith(color: mainColor, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                counter.name,
-                style: TextStyle(color: mainColor.withOpacity(0.4)),
-              ),
+              CounterDetails(counter: counter),
               const SizedBox(height: CountersSpacing.midSpace),
               Wrap(
+                // TODO try to make this a row
                 alignment: WrapAlignment.spaceAround,
                 children: [
-                  _counterButtonFor(GroupMode.month),
-                  _counterButtonFor(GroupMode.day),
-                  _counterButtonFor(GroupMode.week),
+                  GroupModeButton(
+                    mode: GroupMode.month,
+                    onPressed: _setCurrentGroupMode,
+                    selected: currentMode == GroupMode.month,
+                  ),
+                  GroupModeButton(
+                    mode: GroupMode.week,
+                    onPressed: _setCurrentGroupMode,
+                    selected: currentMode == GroupMode.week,
+                  ),
+                  GroupModeButton(
+                    mode: GroupMode.day,
+                    onPressed: _setCurrentGroupMode,
+                    selected: currentMode == GroupMode.day,
+                  ),
                 ],
               ),
               const SizedBox(height: CountersSpacing.midSpace),
@@ -118,7 +110,7 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
                 ),
               ),
               const SizedBox(
-                height: 80,
+                height: 80, // TODO Move to CountersSpacing
               ),
               CountersButton(
                 text: "Delete",
@@ -131,9 +123,7 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (BuildContext context) {
-                      return alert;
-                    },
+                    builder: (BuildContext context) => alert,
                   );
                 },
               ),
@@ -166,29 +156,6 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
     }
   }
 
-  Widget _counterButtonFor(GroupMode mode) {
-    String label;
-    switch (mode) {
-      case GroupMode.day:
-        label = "By day";
-        break;
-      case GroupMode.week:
-        label = "By week";
-        break;
-      case GroupMode.month:
-        label = "By month";
-        break;
-    }
-    return CountersButton(
-      text: label,
-      background: currentMode == mode ? Colors.black : Colors.white,
-      color: currentMode == mode ? Colors.white : Colors.black,
-      onPressed: () {
-        _setCurrentGroupMode(mode);
-      },
-    );
-  }
-
   void _deleteCounter() async {
     try {
       final counter = ref.read(routeProvider).currentCounter;
@@ -203,8 +170,9 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
       context.snack("Counter was deleted");
       Navigator.of(context, rootNavigator: true).pop();
       router.toDashboardPage();
-    } catch (e, s) {
+    } catch (e) {
       context.snack("Could not delete counter");
+      // TODO log
       // print("Exception $e");
       // print("StackTrace $s");
     }

@@ -25,7 +25,7 @@ class DashboardPage extends ConsumerWidget {
           const CountersList(),
           Positioned(
             right: CountersSpacing.smallSpace,
-            top: CountersSpacing.midSpace,
+            top: CountersSpacing.safeSpace,
             child: CountersIconButton(
               disableDepth: true,
               icon: Icons.more_vert,

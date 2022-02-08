@@ -84,7 +84,9 @@ class _ColorSelectorState extends State<ColorSelector> {
             }),
         error: (error, stack) {
           // TODO enhance this
-          print(error);
+          // TODO log
+          // print("Exception $e");
+          // print("StackTrace $s");
         },
         loading: () => const AsyncValue.loading());
   }
