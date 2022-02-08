@@ -32,6 +32,8 @@ class AppRouteNotifier extends StateNotifier<AppRoute> {
 
   void toDashboardPage() => state = const AppRoute(name: AppRouteName.dashboard);
 
+  void toSettingsPage() => state = const AppRoute(name: AppRouteName.settings);
+
   void toGraphPage(CounterReadDto counter) => state = AppRoute(
         name: AppRouteName.graph,
         currentCounter: counter,

@@ -5,6 +5,7 @@ import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/screens/counter_chart_page.dart';
 import 'package:kcounter/screens/create_counter_page.dart';
 import 'package:kcounter/screens/dashboard_page.dart';
+import 'package:kcounter/screens/settings_page.dart';
 
 class AppNavigator extends ConsumerWidget {
   const AppNavigator({Key? key}) : super(key: key);
@@ -17,7 +18,8 @@ class AppNavigator extends ConsumerWidget {
         const MaterialPage(child: DashboardPage()),
         if (currentRoute.name == AppRouteName.create)
           const MaterialPage(child: CreateCounterPage()),
-        if (currentRoute.name == AppRouteName.graph) const MaterialPage(child: CounterChartPage())
+        if (currentRoute.name == AppRouteName.graph) const MaterialPage(child: CounterChartPage()),
+        if (currentRoute.name == AppRouteName.settings) const MaterialPage(child: SettingsPage()),
       ],
       onPopPage: (route, result) {
         // this runs each time the user hits the back button
