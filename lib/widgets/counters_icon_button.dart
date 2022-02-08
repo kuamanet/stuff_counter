@@ -4,6 +4,7 @@ class CountersIconButton extends StatefulWidget {
   final EdgeInsets? padding;
   final IconData icon;
   final bool? loading;
+  final bool? disableDepth;
   final void Function()? onPressed;
   final Color? color;
   final Color? background;
@@ -11,6 +12,7 @@ class CountersIconButton extends StatefulWidget {
     Key? key,
     required this.icon,
     this.padding,
+    this.disableDepth,
     this.color,
     this.background,
     this.onPressed,
@@ -29,6 +31,7 @@ class _CountersIconButtonState extends State<CountersIconButton> {
       style: NeumorphicStyle(
         color: widget.background ?? Colors.white,
         shape: NeumorphicShape.flat,
+        disableDepth: widget.disableDepth,
         boxShape: const NeumorphicBoxShape.circle(),
       ),
       padding: widget.padding,

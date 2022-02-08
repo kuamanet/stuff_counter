@@ -10,17 +10,32 @@ class DashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.read(routeProvider.notifier);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: CountersIconButton(
         icon: Icons.add,
         padding: const EdgeInsets.all(CountersSpacing.padding300),
         onPressed: () {
-          final router = ref.read(routeProvider.notifier);
           router.toCreatePage();
         },
       ),
-      body: const CountersList(),
+      body: Stack(
+        children: [
+          const CountersList(),
+          Positioned(
+            right: CountersSpacing.smallSpace,
+            top: CountersSpacing.midSpace,
+            child: CountersIconButton(
+              disableDepth: true,
+              icon: Icons.more_vert,
+              onPressed: () {
+                router.toSettingsPage();
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
