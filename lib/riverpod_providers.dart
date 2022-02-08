@@ -7,14 +7,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/create_counter.dart';
 import 'package:kcounter/counters/actions/delete_counter.dart';
 import 'package:kcounter/counters/actions/generate_random_color.dart';
+import 'package:kcounter/counters/actions/get_settings.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/counters/actions/increment_counter.dart';
 import 'package:kcounter/counters/actions/list_counters.dart';
+import 'package:kcounter/counters/actions/update_settings.dart';
 import 'package:kcounter/counters/core/counters_repository.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
+import 'package:kcounter/counters/entities/settings_dto.dart';
 import 'package:kcounter/counters/repositories/realtime_counters_repository.dart';
 import 'package:kcounter/extensions/counter_log.dart';
 import 'package:kcounter/firebase_options.dart';
+import 'package:localstore/localstore.dart';
 
 import 'navigation/app_route.dart';
 
@@ -23,8 +27,11 @@ final routeProvider =
 
 class AppRouteNotifier extends StateNotifier<AppRoute> {
   AppRouteNotifier() : super(const AppRoute(name: AppRouteName.dashboard));
+
   void toCreatePage() => state = const AppRoute(name: AppRouteName.create);
+
   void toDashboardPage() => state = const AppRoute(name: AppRouteName.dashboard);
+
   void toGraphPage(CounterReadDto counter) => state = AppRoute(
         name: AppRouteName.graph,
         currentCounter: counter,
@@ -49,6 +56,9 @@ final firebaseProvider = FutureProvider<FirebaseApp>((_) async {
 
   return app;
 });
+
+// Provides local persistence layer
+final localStoreProvider = Provider<Localstore>((_) => Localstore.instance);
 
 final repositoryProvider = FutureProvider<CountersRepository>((ref) async {
   // wait for firebase initialization before reading a firebase database instance
@@ -99,6 +109,7 @@ class CounterLogsGrouperParams {
 
 class CounterLogsGrouper extends StateNotifier<Map<String, List<LineChartData>>> {
   CounterLogsGrouper() : super({});
+
   void group(CounterLogsGrouperParams params) async {
     final action = GroupCounterLogs();
     final counterId = params.id ?? params.counter.id;
@@ -110,3 +121,14 @@ class CounterLogsGrouper extends StateNotifier<Map<String, List<LineChartData>>>
     state = Map.of(state);
   }
 }
+
+final readLocalSettingsProvider = StreamProvider.autoDispose<SettingsDto>((ref) {
+  final store = ref.read(localStoreProvider);
+  final action = GetSettings(db: store);
+  return action.run();
+});
+
+final updateLocalSettingsProvider = Provider<UpdateSettings>((ref) {
+  final store = ref.read(localStoreProvider);
+  return UpdateSettings(db: store);
+});
