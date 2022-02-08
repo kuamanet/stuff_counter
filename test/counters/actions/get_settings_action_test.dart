@@ -15,7 +15,7 @@ void main() {
     when(() {
       return collectionRef.stream;
     }).thenAnswer((_) async* {
-      yield settings.toMap();
+      yield {settingsId: settings.toMap()};
     });
 
     when(() {
@@ -29,7 +29,7 @@ void main() {
           emitsDone,
         ]));
 
-    verify(() => databaseMock.collection(GetSettings.settingsKey));
+    verify(() => databaseMock.collection(settingsKey));
     verify(() => collectionRef.stream);
   });
 }
