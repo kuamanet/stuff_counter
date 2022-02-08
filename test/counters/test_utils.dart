@@ -24,7 +24,12 @@ class DatabaseEventMock extends Mock implements DatabaseEvent {}
 class DatabaseReferenceMock extends Mock implements DatabaseReference {}
 
 CounterCreateDto createEmptyCounter() {
-  return CounterCreateDto(name: "name", count: 0, color: Colors.amber.toString(), history: []);
+  return CounterCreateDto(
+    name: "name",
+    count: 0,
+    color: Colors.amber.toString(),
+    history: const [],
+  );
 }
 
 CounterReadDto readEmptyCounter({String id = "id", int count = 0, history = const <CounterLog>[]}) {

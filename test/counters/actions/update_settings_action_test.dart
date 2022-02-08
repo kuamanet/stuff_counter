@@ -26,7 +26,7 @@ void main() {
       return databaseMock.collection(any());
     }).thenReturn(collectionRefMock);
 
-    action.run(settings);
+    await action.run(settings);
 
     verify(() => databaseMock.collection(settingsKey));
     verify(() => collectionRefMock.doc(settingsId));

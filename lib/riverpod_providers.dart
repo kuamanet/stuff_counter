@@ -18,9 +18,8 @@ import 'package:kcounter/counters/entities/settings_dto.dart';
 import 'package:kcounter/counters/repositories/realtime_counters_repository.dart';
 import 'package:kcounter/extensions/counter_log.dart';
 import 'package:kcounter/firebase_options.dart';
+import 'package:kcounter/navigation/app_route.dart';
 import 'package:localstore/localstore.dart';
-
-import 'navigation/app_route.dart';
 
 final routeProvider =
     StateNotifierProvider.autoDispose<AppRouteNotifier, AppRoute>((_) => AppRouteNotifier());
@@ -40,9 +39,9 @@ class AppRouteNotifier extends StateNotifier<AppRoute> {
       );
 }
 
-final randomColorActionProvider = StreamProvider.autoDispose<Color>((_) async* {
+final randomColorActionProvider = FutureProvider.autoDispose<Color>((_) async {
   final action = GenerateRandomColor();
-  yield await action.run();
+  return await action.run();
 });
 
 final firebaseProvider = FutureProvider<FirebaseApp>((_) async {

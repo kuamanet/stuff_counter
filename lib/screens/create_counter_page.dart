@@ -6,6 +6,7 @@ import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/color_picker_row.dart';
+import 'package:kcounter/widgets/counter_header.dart';
 import 'package:kcounter/widgets/counters_icon_button.dart';
 import 'package:kcounter/widgets/counters_scaffold.dart';
 import 'package:kcounter/widgets/counters_text_field.dart';
@@ -26,18 +27,16 @@ class _CreateCounterPageState extends ConsumerState<CreateCounterPage> {
   Widget build(BuildContext context) {
     return CountersScaffold(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            "Add counter",
-            style: Theme.of(context).textTheme.headline5,
-          ),
+          const CounterHeader(title: "Add counter"),
           CountersSpacing.spacer(),
           CountersTextField(
             hintText: "Name",
             controller: nameController,
           ),
           CountersSpacing.spacer(),
-          colorPickerRow(onColorChanged: (color) {
+          ColorPickerRow(onColorChanged: (color) {
             counterColor = color;
           }),
           const Spacer(flex: 1),
@@ -68,8 +67,9 @@ class _CreateCounterPageState extends ConsumerState<CreateCounterPage> {
                 final router = ref.read(routeProvider.notifier);
                 context.snack("Counter was created 🚀🚀🚀🚀");
                 router.toDashboardPage();
-              } catch (e, s) {
+              } catch (e) {
                 context.snack("Could not create counter");
+                // TODO log
                 // print("Exception $e");
                 // print("StackTrace $s");
               } finally {

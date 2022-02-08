@@ -28,6 +28,7 @@ void main() {
 
   test("it should be built with a Localstore instance", () {
     // silly test to enforce the way the constructor should work
+    // ignore: unnecessary_type_check
     expect(repo is LocalCountersRepository, true);
   });
 
@@ -37,7 +38,7 @@ void main() {
     }).thenAnswer((_) => "1");
     when(() {
       return document.set(any());
-    }).thenAnswer((_) async => Future.value());
+    }).thenAnswer((_) async => Future<void>.value());
 
     when(() {
       return ref.doc(any());
@@ -62,7 +63,7 @@ void main() {
     // mock the update call
     when(() {
       return document.set(any());
-    }).thenAnswer((_) => Future.value());
+    }).thenAnswer((_) => Future<void>.value());
 
     await repo.update(entity);
 
@@ -83,7 +84,7 @@ void main() {
     // mock the delete call
     when(() {
       return document.delete();
-    }).thenAnswer((_) => Future.value());
+    }).thenAnswer((_) => Future<void>.value());
 
     await repo.delete(entity.id);
 

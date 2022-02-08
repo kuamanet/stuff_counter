@@ -25,6 +25,7 @@ void main() {
 
   test("it should be built with a FirebaseDatabase instance", () {
     // silly test to enforce the way the constructor should work
+    // ignore: unnecessary_type_check
     expect(repo is RealTimeCountersRepository, true);
   });
 
