@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
+import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/extensions/color.dart';
 import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/riverpod_providers.dart';
@@ -170,11 +171,9 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
       context.snack("Counter was deleted");
       Navigator.of(context, rootNavigator: true).pop();
       router.toDashboardPage();
-    } catch (e) {
+    } catch (error, stacktrace) {
       context.snack("Could not delete counter");
-      // TODO log
-      // print("Exception $e");
-      // print("StackTrace $s");
+      CounterLogger.error("While deleting the counter", error, stacktrace);
     }
   }
 }

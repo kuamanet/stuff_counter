@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/extensions/color.dart';
 import 'package:kcounter/extensions/context.dart';
@@ -59,11 +60,9 @@ class CounterCard extends ConsumerWidget {
       final router = ref.read(routeProvider.notifier);
       context.snack("Counter was incremented 🚀🚀🚀🚀");
       router.toDashboardPage();
-    } catch (e) {
+    } catch (error, stacktrace) {
       context.snack("Could not increment counter");
-      // TODO log
-      // print("Exception $e");
-      // print("StackTrace $s");
+      CounterLogger.error("While incrementing the counter", error, stacktrace);
     }
   }
 }

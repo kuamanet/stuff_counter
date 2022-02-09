@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/riverpod_providers.dart';
 
 class ColorSelector extends StatefulWidget {
@@ -82,11 +83,9 @@ class _ColorSelectorState extends State<ColorSelector> {
                 ],
               );
             }),
-        error: (error, stack) {
+        error: (error, stacktrace) {
           // TODO enhance this
-          // TODO log
-          // print("Exception $e");
-          // print("StackTrace $s");
+          CounterLogger.error("While loading random color action", error, stacktrace);
         },
         loading: () => const AsyncValue.loading());
   }

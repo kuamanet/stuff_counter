@@ -1,6 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/create_counter.dart';
+import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/extensions/color.dart';
 import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/riverpod_providers.dart';
@@ -67,11 +68,9 @@ class _CreateCounterPageState extends ConsumerState<CreateCounterPage> {
                 final router = ref.read(routeProvider.notifier);
                 context.snack("Counter was created 🚀🚀🚀🚀");
                 router.toDashboardPage();
-              } catch (e) {
+              } catch (error, stacktrace) {
                 context.snack("Could not create counter");
-                // TODO log
-                // print("Exception $e");
-                // print("StackTrace $s");
+                CounterLogger.error("While creating the counter", error, stacktrace);
               } finally {
                 setState(() {
                   isLoading = false;
