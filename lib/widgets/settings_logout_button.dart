@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counters_button.dart';
@@ -20,8 +21,12 @@ class SettingsLogoutButton extends ConsumerWidget {
           vertical: CountersSpacing.padding300,
           horizontal: CountersSpacing.padding900,
         ),
-        onPressed: () {
-          // TODO logout
+        onPressed: () async {
+          try {
+            await ref.read(signOutProvider.future);
+          } catch (error, stacktrace) {
+            CounterLogger.error("While trying to sign out", error, stacktrace);
+          }
         },
       );
     }
