@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kcounter/authentication/entities/authentication_entities.dart';
 import 'package:kcounter/counters/actions/create_counter.dart';
 import 'package:kcounter/counters/actions/delete_counter.dart';
 import 'package:kcounter/counters/actions/generate_random_color.dart';
@@ -56,6 +59,50 @@ final firebaseProvider = FutureProvider<FirebaseApp>((_) async {
   }
 
   return app;
+});
+
+final authProvider = StreamProvider.autoDispose<Authentication>((ref) async* {
+  await ref.read(firebaseProvider.future);
+
+  final UpdateSettings updateLocalSettingsAction = await ref.read(updateLocalSettingsProvider);
+
+  yield* FirebaseAuth.instance.userChanges().asyncMap((User? user) async {
+    final SettingsDto currentSettings = await ref.read(readLocalSettingsProvider.future);
+    if (user == null) {
+      // ensure settings are coherent with state
+      await updateLocalSettingsAction.run(currentSettings.copyWith(authenticated: false));
+      return Authentication(state: AuthenticationState.signedOut);
+    }
+
+    await updateLocalSettingsAction.run(currentSettings.copyWith(authenticated: true));
+    return Authentication(
+      state: AuthenticationState.signedIn,
+      username: user.displayName,
+      uid: user.uid,
+    );
+  });
+});
+
+final signOutProvider = FutureProvider.autoDispose((ref) async {
+  await ref.read(firebaseProvider.future);
+  await FirebaseAuth.instance.signOut();
+});
+
+final signInProvider = FutureProvider.autoDispose((ref) async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+  await FirebaseAuth.instance.signInWithCredential(credential);
 });
 
 // Provides local persistence layer

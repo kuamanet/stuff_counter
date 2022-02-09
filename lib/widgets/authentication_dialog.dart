@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kcounter/authentication/entities/authentication_entities.dart';
+import 'package:kcounter/counters/core/counter_logger.dart';
+import 'package:kcounter/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counters_button.dart';
 
-enum AuthenticationResult { success, failure }
-
-class AuthenticationDialog extends StatelessWidget {
+class AuthenticationDialog extends ConsumerWidget {
   const AuthenticationDialog({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -33,9 +35,13 @@ class AuthenticationDialog extends StatelessWidget {
               vertical: CountersSpacing.padding300,
               horizontal: CountersSpacing.padding900,
             ),
-            onPressed: () {
-              // TODO await authentication
-              Navigator.of(context).pop(AuthenticationResult.success);
+            onPressed: () async {
+              try {
+                await ref.read(signInProvider.future);
+              } catch (error, stacktrace) {
+                CounterLogger.error("While trying to authenticate", error, stacktrace);
+                Navigator.of(context).pop(AuthenticationResult.failure);
+              }
             },
           ),
         ],

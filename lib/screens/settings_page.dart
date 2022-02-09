@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kcounter/authentication/entities/authentication_entities.dart';
 import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/counters/entities/settings_dto.dart';
 import 'package:kcounter/extensions/context.dart';
@@ -15,7 +16,6 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: implement build
     final settings = ref.watch(readLocalSettingsProvider);
     return CountersScaffold(
       child: Column(
