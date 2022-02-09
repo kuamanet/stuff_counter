@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kcounter/counters/actions/list_counters.dart';
+import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
@@ -19,9 +20,12 @@ class CountersListStreamBuilder extends StreamBuilder<List<CounterReadDto>> {
               default:
                 if (countersSnapshot.hasError) {
                   context.snack("Could not load counters list");
-                  // TODO log
-                  // print("Exception $e");
-                  // print("StackTrace $s");
+
+                  CounterLogger.error(
+                    "while loading counters list",
+                    countersSnapshot.error,
+                    countersSnapshot.stackTrace,
+                  );
                   return const SizedBox.shrink();
                 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/counters/entities/settings_dto.dart';
 import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/riverpod_providers.dart';
@@ -86,11 +87,9 @@ class SettingsPage extends ConsumerWidget {
         online: value,
         authenticated: authenticated ?? false,
       ));
-    } catch (error) {
+    } catch (error, stacktrace) {
       context.snack("Could not update settings");
-      // TODO log
-      // print("Exception $e");
-      // print("StackTrace $s");
+      CounterLogger.error("While updating the settings", error, stacktrace);
     }
   }
 }

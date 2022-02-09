@@ -1,8 +1,10 @@
 import 'package:logger/logger.dart';
 
-var logger = Logger(
-  printer: PrettyPrinter(),
-);
+class CounterLogger {
+  static final _logger = Logger(
+    printer: PrettyPrinter(printTime: true),
+  );
 
-// TODO
-class CounterLogger {}
+  static void error(dynamic message, [dynamic error, StackTrace? stackTrace]) => _logger.e(message);
+  static void info(dynamic message, [dynamic error, StackTrace? stackTrace]) => _logger.i(message);
+}
