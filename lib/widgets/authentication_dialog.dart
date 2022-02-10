@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/authentication/entities/authentication_entities.dart';
 import 'package:kcounter/counters/core/counter_logger.dart';
-import 'package:kcounter/riverpod_providers.dart';
+import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counters_button.dart';
 
@@ -37,7 +37,9 @@ class AuthenticationDialog extends ConsumerWidget {
             ),
             onPressed: () async {
               try {
-                await ref.read(signInProvider.future);
+                final action = ref.read(signInActionProvider);
+                await action.run();
+                Navigator.of(context).pop(AuthenticationResult.success);
               } catch (error, stacktrace) {
                 CounterLogger.error("While trying to authenticate", error, stacktrace);
                 Navigator.of(context).pop(AuthenticationResult.failure);

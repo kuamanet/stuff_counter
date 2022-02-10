@@ -3,7 +3,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/extensions/context.dart';
-import 'package:kcounter/riverpod_providers.dart';
+import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 
 class ColorSelector extends StatefulWidget {
   final ValueChanged<Color> onColorChanged;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/navigation/app_route.dart';
-import 'package:kcounter/riverpod_providers.dart';
+import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 import 'package:kcounter/screens/counter_chart_page.dart';
 import 'package:kcounter/screens/create_counter_page.dart';
 import 'package:kcounter/screens/dashboard_page.dart';

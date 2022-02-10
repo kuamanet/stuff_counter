@@ -4,7 +4,7 @@ import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/extensions/color.dart';
 import 'package:kcounter/extensions/context.dart';
-import 'package:kcounter/riverpod_providers.dart';
+import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counter_back_button.dart';
 import 'package:kcounter/widgets/counter_chart.dart';

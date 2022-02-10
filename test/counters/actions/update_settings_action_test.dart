@@ -19,6 +19,10 @@ void main() {
     }).thenAnswer((_) => Future.value());
 
     when(() {
+      return documentMock.get();
+    }).thenAnswer((_) => Future.value(settings.toMap()));
+
+    when(() {
       return collectionRefMock.doc(any());
     }).thenReturn(documentMock);
 
@@ -26,7 +30,12 @@ void main() {
       return databaseMock.collection(any());
     }).thenReturn(collectionRefMock);
 
-    await action.run(settings);
+    await action.run(
+      UpdateSettingsParams(
+        authenticated: settings.authenticated,
+        online: settings.online,
+      ),
+    );
 
     verify(() => databaseMock.collection(settingsKey));
     verify(() => collectionRefMock.doc(settingsId));
