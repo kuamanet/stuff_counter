@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/extensions/counter_log.dart';
-import 'package:kcounter/riverpod_providers.dart';
+import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 
 class CounterChart extends ConsumerStatefulWidget {
   final CounterReadDto counter;

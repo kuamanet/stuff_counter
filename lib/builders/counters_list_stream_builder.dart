@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kcounter/authentication/entities/authentication_entities.dart';
 import 'package:kcounter/counters/actions/list_counters.dart';
 import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counter_card.dart';
+import 'package:kcounter/widgets/user_greeting.dart';
 
 class CountersListStreamBuilder extends StreamBuilder<List<CounterReadDto>> {
   final ListCounters action;
-  final AsyncValue<Authentication> authState;
 
   CountersListStreamBuilder({
     Key? key,
     required this.action,
-    required this.authState,
   }) : super(
           key: key,
           stream: action.run(),
@@ -48,8 +45,7 @@ class CountersListStreamBuilder extends StreamBuilder<List<CounterReadDto>> {
                     child: Wrap(
                       runSpacing: CountersSpacing.midSpace,
                       children: [
-                        if (authState.value?.state == AuthenticationState.signedIn)
-                          Text("Welcome ${authState.value?.username}"),
+                        const UserGreeting(),
                         ...counters,
                       ],
                     ),

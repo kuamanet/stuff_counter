@@ -1,10 +1,11 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/authentication/entities/authentication_entities.dart';
+import 'package:kcounter/counters/actions/update_settings.dart';
 import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/counters/entities/settings_dto.dart';
 import 'package:kcounter/extensions/context.dart';
-import 'package:kcounter/riverpod_providers.dart';
+import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/authentication_dialog.dart';
 import 'package:kcounter/widgets/counter_header.dart';
@@ -39,14 +40,16 @@ class SettingsPage extends ConsumerWidget {
                       ),
                       value: settings.value?.online ?? false,
                       onChanged: (value) async {
-                        if (value == true && settings.value?.authenticated == false) {
+                        if (value == true && (settings.value?.authenticated ?? false) == false) {
                           AuthenticationResult result = await showDialog(
-                              context: context, builder: (_) => const AuthenticationDialog());
+                            context: context,
+                            builder: (_) => const AuthenticationDialog(),
+                          );
 
                           if (result == AuthenticationResult.success) {
                             // TODO copy local counters to remote
 
-                            _updateLocalSettings(
+                            await _updateLocalSettings(
                               value: value,
                               context: context,
                               ref: ref,
@@ -56,8 +59,12 @@ class SettingsPage extends ConsumerWidget {
                           }
                         } else {
                           // TODO copy remote counters to local
-                          _updateLocalSettings(
-                              value: value, context: context, ref: ref, settings: settings);
+                          await _updateLocalSettings(
+                            value: value,
+                            context: context,
+                            ref: ref,
+                            settings: settings,
+                          );
                         }
                       },
                     ),
@@ -73,7 +80,7 @@ class SettingsPage extends ConsumerWidget {
     );
   }
 
-  void _updateLocalSettings({
+  Future<void> _updateLocalSettings({
     required bool value,
     bool? authenticated,
     required WidgetRef ref,
@@ -82,11 +89,8 @@ class SettingsPage extends ConsumerWidget {
   }) async {
     final action = ref.read(updateLocalSettingsProvider);
     try {
-      final currentValue = settings.value ?? SettingsDto.defaultValue();
-      await action.run(currentValue.copyWith(
-        online: value,
-        authenticated: authenticated ?? false,
-      ));
+      await action.run(UpdateSettingsParams(online: value, authenticated: authenticated ?? false));
+      CounterLogger.info("updated settings authenticated ${authenticated}");
     } catch (error, stacktrace) {
       context.snack("Could not update settings");
       CounterLogger.error("While updating the settings", error, stacktrace);
