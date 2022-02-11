@@ -4,12 +4,16 @@ import 'package:kcounter/counters/entities/counter_create_dto.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
 
 class RealTimeCountersRepository implements CountersRepository {
-  final _collectionName = "counters/";
+  late final String _collectionName;
   late DatabaseReference _ref;
 
-  RealTimeCountersRepository(FirebaseDatabase database) {
+  RealTimeCountersRepository(
+    FirebaseDatabase database,
+    String guid,
+  ) {
     database.setLoggingEnabled(true);
     database.setPersistenceEnabled(true);
+    _collectionName = guid;
     _ref = database.ref(_collectionName);
   }
 
