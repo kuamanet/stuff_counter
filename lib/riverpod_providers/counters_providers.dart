@@ -12,6 +12,7 @@ import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/counters/repositories/realtime_counters_repository.dart';
 import 'package:kcounter/extensions/counter_log.dart';
 import 'package:kcounter/riverpod_providers/firestore_providers.dart';
+import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 
 final randomColorActionProvider = FutureProvider.autoDispose<Color>((_) async {
   final action = GenerateRandomColor();
@@ -22,7 +23,7 @@ final repositoryProvider = FutureProvider<CountersRepository>((ref) async {
   // wait for firebase initialization before reading a firebase database instance
   await ref.watch(firebaseProvider.future);
 
-  return RealTimeCountersRepository(FirebaseDatabase.instance);
+  return RealTimeCountersRepository(FirebaseDatabase.instance, "counters/");
 });
 
 final createCounterActionProvider = FutureProvider.autoDispose<CreateCounter>((ref) async {

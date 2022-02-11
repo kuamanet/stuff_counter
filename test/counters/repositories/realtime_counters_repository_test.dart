@@ -20,7 +20,7 @@ void main() {
       return firebaseDatabase.ref(any());
     }).thenReturn(ref);
 
-    repo = RealTimeCountersRepository(firebaseDatabase);
+    repo = RealTimeCountersRepository(firebaseDatabase, "counters/");
   });
 
   test("it should be built with a FirebaseDatabase instance", () {
