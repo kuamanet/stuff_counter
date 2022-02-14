@@ -5,22 +5,30 @@ class SettingsDto extends Equatable {
 
   final bool authenticated;
 
-  const SettingsDto({required this.online, required this.authenticated});
+  final bool dailyReminder;
+
+  const SettingsDto({
+    required this.online,
+    required this.authenticated,
+    required this.dailyReminder,
+  });
 
   @override
-  List<Object?> get props => [online, authenticated];
+  List<Object?> get props => [online, authenticated, dailyReminder];
 
   Map<String, dynamic> toMap() {
     return {
       "online": online,
       "authenticated": authenticated,
+      "dailyReminder": dailyReminder,
     };
   }
 
-  SettingsDto copyWith({bool? online, bool? authenticated}) {
+  SettingsDto copyWith({bool? online, bool? authenticated, bool? dailyReminder}) {
     return SettingsDto(
       online: online ?? this.online,
       authenticated: authenticated ?? this.authenticated,
+      dailyReminder: dailyReminder ?? this.dailyReminder,
     );
   }
 
@@ -28,6 +36,7 @@ class SettingsDto extends Equatable {
     if (map.keys.isNotEmpty) {
       return SettingsDto(
         online: map.containsKey("online") ? map["online"] as bool : false,
+        dailyReminder: map.containsKey("dailyReminder") ? map["dailyReminder"] as bool : false,
         authenticated: map.containsKey("authenticated") ? map["authenticated"] as bool : false,
       );
     }
@@ -37,6 +46,6 @@ class SettingsDto extends Equatable {
   }
 
   static SettingsDto defaultValue() {
-    return const SettingsDto(online: false, authenticated: false);
+    return const SettingsDto(online: false, authenticated: false, dailyReminder: false);
   }
 }

@@ -6,10 +6,12 @@ import 'package:localstore/localstore.dart';
 class UpdateSettingsParams {
   bool? authenticated;
   bool? online;
+  bool? dailyReminder;
 
   UpdateSettingsParams({
     this.authenticated,
     this.online,
+    this.dailyReminder,
   });
 }
 
@@ -27,6 +29,7 @@ class UpdateSettings extends ParamsAction<UpdateSettingsParams, void> {
     final value = storedValue == null ? SettingsDto.defaultValue() : SettingsDto.from(storedValue);
     final nextValue = value.copyWith(
       online: params.online ?? value.online,
+      dailyReminder: params.dailyReminder ?? value.dailyReminder,
       authenticated: params.authenticated ?? value.authenticated,
     );
     await record.set(nextValue.toMap());
