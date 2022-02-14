@@ -11,7 +11,7 @@ void main() {
     final databaseMock = LocalDatabaseMock();
     final collectionRefMock = CollectionRefMock();
     final documentMock = DocumentRefMock();
-    const settings = SettingsDto(online: true, authenticated: false);
+    const settings = SettingsDto(online: true, authenticated: false, dailyReminder: false);
     final action = UpdateSettings(db: databaseMock);
 
     when(() {

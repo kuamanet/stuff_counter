@@ -9,7 +9,7 @@ void main() {
   test("It allows to read the current app settings", () async {
     final databaseMock = LocalDatabaseMock();
     final collectionRef = CollectionRefMock();
-    const settings = SettingsDto(online: false, authenticated: false);
+    const settings = SettingsDto(online: false, authenticated: false, dailyReminder: false);
     final action = GetSettings(db: databaseMock);
 
     when(() {
