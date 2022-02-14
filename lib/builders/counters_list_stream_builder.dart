@@ -35,13 +35,13 @@ class CountersListStreamBuilder extends StreamBuilder<List<CounterReadDto>> {
                 return SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(
-                      CountersSpacing.midSpace,
-                      CountersSpacing.bigSpace,
-                      CountersSpacing.midSpace,
+                      CountersSpacing.space600,
+                      CountersSpacing.space1200,
+                      CountersSpacing.space600,
                       100,
                     ),
                     child: Wrap(
-                      runSpacing: CountersSpacing.midSpace,
+                      runSpacing: CountersSpacing.space600,
                       children: [
                         const UserGreeting(),
                         ...counters,

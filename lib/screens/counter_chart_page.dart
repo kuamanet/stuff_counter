@@ -55,6 +55,7 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
   @override
   Widget build(BuildContext context) {
     final counter = ref.watch(routeProvider).currentCounter;
+
     if (counter == null) {
       return const SizedBox.shrink();
     }
@@ -63,9 +64,9 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(
-            CountersSpacing.midSpace,
+            CountersSpacing.space600,
             CountersSpacing.padding900,
-            CountersSpacing.midSpace,
+            CountersSpacing.space600,
             CountersSpacing.padding900,
           ),
           child: Column(
@@ -76,9 +77,9 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
                   CounterBackButton(),
                 ],
               ),
-              const SizedBox(height: CountersSpacing.midSpace),
+              const SizedBox(height: CountersSpacing.space600),
               CounterDetails(counter: counter),
-              const SizedBox(height: CountersSpacing.midSpace),
+              const SizedBox(height: CountersSpacing.space600),
               Wrap(
                 // TODO try to make this a row
                 alignment: WrapAlignment.spaceAround,
@@ -100,7 +101,7 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: CountersSpacing.midSpace),
+              const SizedBox(height: CountersSpacing.space600),
               SizedBox(
                 height: 250,
                 child: CounterChart(
@@ -111,7 +112,23 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
                 ),
               ),
               const SizedBox(
-                height: 80, // TODO Move to CountersSpacing
+                height: CountersSpacing.space900,
+              ),
+              CountersButton(
+                text: "Update",
+                background: Colors.black,
+                color: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  vertical: CountersSpacing.padding300,
+                  horizontal: CountersSpacing.padding300,
+                ),
+                onPressed: () {
+                  final router = ref.read(routeProvider.notifier);
+                  router.toUpdatePage(counter);
+                },
+              ),
+              const SizedBox(
+                height: CountersSpacing.space600,
               ),
               CountersButton(
                 text: "Delete",

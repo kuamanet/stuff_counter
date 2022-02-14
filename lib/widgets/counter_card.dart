@@ -46,7 +46,7 @@ class CounterCard extends ConsumerWidget {
                       background: Colors.black,
                       icon: Icons.arrow_upward,
                     ),
-                    const SizedBox(height: CountersSpacing.smallSpace),
+                    const SizedBox(height: CountersSpacing.space100),
                     if (counter.count > 0)
                       CounterCardButton(
                         onPressed: () => _decreaseCount(ref, context),

@@ -40,7 +40,7 @@ class _CountersButtonState extends State<CountersButton> {
         color: widget.background ?? Colors.white,
         shape: NeumorphicShape.flat,
         boxShape: NeumorphicBoxShape.roundRect(
-            const BorderRadius.all(Radius.circular(CountersSpacing.padding300))),
+            const BorderRadius.all(Radius.circular(CountersSpacing.padding100))),
       ),
       padding: widget.padding,
       child: widget.icon != null
@@ -51,7 +51,7 @@ class _CountersButtonState extends State<CountersButton> {
                 SvgPicture.asset(
                   widget.icon!,
                   semanticsLabel: widget.text,
-                  height: CountersSpacing.midSpace,
+                  height: CountersSpacing.space600,
                 ),
                 text
               ],

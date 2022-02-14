@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/core/counter_logger.dart';
+import 'package:kcounter/extensions/color.dart';
 import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 
@@ -9,11 +10,14 @@ class ColorSelector extends StatefulWidget {
   final ValueChanged<Color> onColorChanged;
   final double height;
   final double width;
+  final String? color;
+
   const ColorSelector({
-    Key? key,
+    required this.onColorChanged,
     this.height = 40,
     this.width = 40,
-    required this.onColorChanged,
+    this.color,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -29,6 +33,7 @@ class _ColorSelectorState extends State<ColorSelector> {
       builder: (context, ref, child) {
         final resolvedColor = _resolveColor(ref);
         resolvedColor.whenData((value) => widget.onColorChanged(value));
+
         return GestureDetector(
           onTap: () {
             _changeColor(context, resolvedColor);
@@ -47,6 +52,10 @@ class _ColorSelectorState extends State<ColorSelector> {
   }
 
   AsyncValue<Color> _resolveColor(WidgetRef ref) {
+    if (widget.color != null && color == null) {
+      return AsyncValue.data(ColorExtension.fromCounterColor(widget.color!));
+    }
+
     if (color != null) {
       return AsyncValue.data(color!);
     }
@@ -85,7 +94,7 @@ class _ColorSelectorState extends State<ColorSelector> {
               );
             }),
         error: (error, stacktrace) {
-          context.snack("Coult no initialize component");
+          context.snack("Could no initialize component");
           CounterLogger.error("While loading random color action", error, stacktrace);
         },
         loading: () => const AsyncValue.loading());

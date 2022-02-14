@@ -1,10 +1,12 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class CountersSpacing {
-  static const double smallSpace = 8;
-  static const double midSpace = 32;
-  static const double safeSpace = 48;
-  static const double bigSpace = 140.0;
+  static const double space100 = 8;
+  static const double space600 = 32;
+  static const double space900 = 80;
+  static const double space1200 = 140.0;
+  static const double spaceSafe = 48;
+
   static const double padding900 = 40.0;
   static const double padding100 = 8.0;
   static const double padding300 = 16.0;
@@ -12,7 +14,7 @@ class CountersSpacing {
 
   static Widget spacer({double? height}) {
     return SizedBox(
-      height: height ?? midSpace,
+      height: height ?? space600,
     );
   }
 

@@ -30,8 +30,11 @@ class LocalCountersRepository implements CountersRepository {
   }
 
   @override
-  Stream<List<CounterReadDto>> getAll() {
-    return _ref.stream.asyncMap((event) async {
+  Stream<List<CounterReadDto>> getAll() async* {
+    // start emitting an empty value
+    yield [];
+    // then map the local database stream
+    yield* _ref.stream.asyncMap((event) async {
       final res = await _ref.get();
       final items = <CounterReadDto>[];
       res?.forEach((key, value) {

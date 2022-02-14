@@ -26,9 +26,6 @@ class _DashboardPage extends ConsumerState<DashboardPage> {
           showSecretCounters = !showSecretCounters;
         });
       },
-      // shakeThresholdGravity: 0,
-      // shakeSlopTimeMS: 0,
-      // shakeCountResetTime: 0,
     );
     super.initState();
   }
@@ -60,8 +57,8 @@ class _DashboardPage extends ConsumerState<DashboardPage> {
             showSecretCounters: showSecretCounters,
           ),
           Positioned(
-            right: CountersSpacing.smallSpace,
-            top: CountersSpacing.safeSpace,
+            right: CountersSpacing.space100,
+            top: CountersSpacing.spaceSafe,
             child: CountersIconButton(
               disableDepth: true,
               icon: Icons.more_vert,
