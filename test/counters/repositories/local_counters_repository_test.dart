@@ -123,6 +123,14 @@ void main() {
     final entity2 = readEmptyCounter(id: "id2");
 
     when(() {
+      return ref.stream;
+    }).thenAnswer((_) async* {
+      yield {
+        entity.id: entity.toMap(),
+        entity2.id: entity2.toMap(),
+      };
+    });
+    when(() {
       return ref.get();
     }).thenAnswer((_) async {
       return {
