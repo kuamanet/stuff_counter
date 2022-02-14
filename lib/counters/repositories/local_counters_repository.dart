@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:kcounter/counters/core/counters_repository.dart';
 import 'package:kcounter/counters/entities/counter_create_dto.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
@@ -14,20 +16,27 @@ class LocalCountersRepository implements CountersRepository {
   }
 
   @override
-  Future create(CounterCreateDto counter) async {
-    final id = _ref.doc().id;
-    await _ref.doc(id).set(counter.toMap());
+  Future create(CounterCreateDto counter, [String? id]) async {
+    final documentId = id ?? _ref.doc().id;
+    final counterRead = CounterReadDto(
+      id: documentId,
+      name: counter.name,
+      count: counter.count,
+      color: counter.color,
+      history: counter.history,
+    );
+    await _ref.doc(documentId).set(counterRead.toMap());
   }
 
   @override
-  Stream<List<CounterReadDto>> getAll() {
-    return _ref.stream.map((event) {
-      final items = <CounterReadDto>[];
-      event.forEach((key, value) {
-        items.add(CounterReadDto.from(Map<String, dynamic>.from(value), key));
-      });
-      return items;
+  Stream<List<CounterReadDto>> getAll() async* {
+    final res = await _ref.get();
+    final items = <CounterReadDto>[];
+    res?.forEach((key, value) {
+      items.add(CounterReadDto.from(Map<String, dynamic>.from(value), value["id"]));
     });
+
+    yield items;
   }
 
   @override

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kcounter/counters/actions/list_counters.dart';
 import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
-import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counter_card.dart';
 import 'package:kcounter/widgets/user_greeting.dart';
@@ -19,10 +18,10 @@ class CountersListStreamBuilder extends StreamBuilder<List<CounterReadDto>> {
           builder: (context, countersSnapshot) {
             switch (countersSnapshot.connectionState) {
               case ConnectionState.waiting:
-                return const CircularProgressIndicator();
+                return const Center(child: CircularProgressIndicator());
               default:
                 if (countersSnapshot.hasError) {
-                  context.snack("Could not load counters list");
+                  // context.snack("Could not load counters list");
 
                   CounterLogger.error(
                     "while loading counters list",

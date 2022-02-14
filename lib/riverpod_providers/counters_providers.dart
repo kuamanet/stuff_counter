@@ -1,58 +1,73 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kcounter/authentication/entities/authentication_entities.dart';
+import 'package:kcounter/counters/actions/copy_counters.dart';
 import 'package:kcounter/counters/actions/create_counter.dart';
 import 'package:kcounter/counters/actions/delete_counter.dart';
 import 'package:kcounter/counters/actions/generate_random_color.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/counters/actions/increment_counter.dart';
 import 'package:kcounter/counters/actions/list_counters.dart';
+import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/counters/core/counters_repository.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
+import 'package:kcounter/counters/repositories/local_counters_repository.dart';
 import 'package:kcounter/counters/repositories/realtime_counters_repository.dart';
 import 'package:kcounter/extensions/counter_log.dart';
 import 'package:kcounter/riverpod_providers/firestore_providers.dart';
 import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
+import 'package:localstore/localstore.dart';
 
 final randomColorActionProvider = FutureProvider.autoDispose<Color>((_) async {
   final action = GenerateRandomColor();
   return await action.run();
 });
 
-final repositoryProvider = FutureProvider<CountersRepository>((ref) async {
-  // wait for firebase initialization before reading a firebase database instance
-  await ref.watch(firebaseProvider.future);
+final repositoryProvider = Provider<CountersRepository>((ref) {
+  final authState = ref.watch(authProvider);
 
-  return RealTimeCountersRepository(FirebaseDatabase.instance, "counters/");
+  CounterLogger.info("Evaluating repository dependency");
+  if (authState.value?.state == AuthenticationState.signedIn) {
+    CounterLogger.info("Logged in");
+    return RealTimeCountersRepository(FirebaseDatabase.instance, "${authState.value!.uid}/");
+  }
+
+  CounterLogger.info("Logged out");
+  return LocalCountersRepository(Localstore.instance);
 });
 
-final createCounterActionProvider = FutureProvider.autoDispose<CreateCounter>((ref) async {
-  final countersRepository = await ref.watch(repositoryProvider.future);
-
+final createCounterActionProvider = Provider<CreateCounter>((ref) {
+  final countersRepository = ref.watch(repositoryProvider);
+  CounterLogger.info("Creating create counter action ${countersRepository.runtimeType}");
   return CreateCounter(countersRepository: countersRepository);
 });
 
-final incrementCounterActionProvider = FutureProvider.autoDispose<IncrementCounter>((ref) async {
-  final countersRepository = await ref.watch(repositoryProvider.future);
+final incrementCounterActionProvider = Provider<IncrementCounter>((ref) {
+  final countersRepository = ref.watch(repositoryProvider);
+  CounterLogger.info("Creating increment counter action ${countersRepository.runtimeType}");
 
   return IncrementCounter(countersRepository: countersRepository);
 });
 
-final listCounterActionProvider = FutureProvider<ListCounters>((ref) async {
-  final countersRepository = await ref.watch(repositoryProvider.future);
+final listCounterActionProvider = Provider<ListCounters>((ref) {
+  final countersRepository = ref.watch(repositoryProvider);
+  CounterLogger.info("Creating list counter action ${countersRepository.runtimeType}");
 
   return ListCounters(countersRepository: countersRepository);
 });
 
-final deleteCounterActionProvider = FutureProvider<DeleteCounter>((ref) async {
-  final countersRepository = await ref.watch(repositoryProvider.future);
+final deleteCounterActionProvider = Provider<DeleteCounter>((ref) {
+  final countersRepository = ref.watch(repositoryProvider);
+  CounterLogger.info("Creating delete counter action ${countersRepository.runtimeType}");
 
   return DeleteCounter(countersRepository: countersRepository);
 });
 
 final counterLogsGrouperProvider =
     StateNotifierProvider<CounterLogsGrouper, Map<String, List<LineChartData>>>(
-        (_) => CounterLogsGrouper());
+  (_) => CounterLogsGrouper(),
+);
 
 class CounterLogsGrouperParams {
   final CounterReadDto counter;
@@ -80,3 +95,19 @@ class CounterLogsGrouper extends StateNotifier<Map<String, List<LineChartData>>>
     state = Map.of(state);
   }
 }
+
+final localToRemoteActionProvider = FutureProvider<CopyCounters>((ref) async {
+  final auth = await ref.read(authProvider.future);
+  final source = LocalCountersRepository(Localstore.instance);
+  final destination = RealTimeCountersRepository(FirebaseDatabase.instance, auth.uid!);
+
+  return CopyCounters(from: source, to: destination);
+});
+
+final remoteToLocalActionProvider = FutureProvider<CopyCounters>((ref) async {
+  final auth = await ref.read(authProvider.future);
+  final source = RealTimeCountersRepository(FirebaseDatabase.instance, auth.uid!);
+  final destination = LocalCountersRepository(Localstore.instance);
+
+  return CopyCounters(from: source, to: destination);
+});

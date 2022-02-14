@@ -58,7 +58,7 @@ class _CreateCounterPageState extends ConsumerState<CreateCounterPage> {
               });
 
               try {
-                final action = await ref.read(createCounterActionProvider.future);
+                final action = ref.read(createCounterActionProvider);
 
                 await action.run(CreateCounterParams(
                   name: nameController.text,
