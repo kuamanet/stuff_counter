@@ -9,7 +9,6 @@ import 'package:kcounter/counters/actions/generate_random_color.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/counters/actions/increment_counter.dart';
 import 'package:kcounter/counters/actions/list_counters.dart';
-import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/counters/core/counters_repository.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/counters/repositories/local_counters_repository.dart';
@@ -27,39 +26,33 @@ final randomColorActionProvider = FutureProvider.autoDispose<Color>((_) async {
 final repositoryProvider = Provider<CountersRepository>((ref) {
   final authState = ref.watch(authProvider);
 
-  CounterLogger.info("Evaluating repository dependency");
   if (authState.value?.state == AuthenticationState.signedIn) {
-    CounterLogger.info("Logged in");
     return RealTimeCountersRepository(FirebaseDatabase.instance, "${authState.value!.uid}/");
   }
 
-  CounterLogger.info("Logged out");
   return LocalCountersRepository(Localstore.instance);
 });
 
 final createCounterActionProvider = Provider<CreateCounter>((ref) {
   final countersRepository = ref.watch(repositoryProvider);
-  CounterLogger.info("Creating create counter action ${countersRepository.runtimeType}");
+
   return CreateCounter(countersRepository: countersRepository);
 });
 
 final incrementCounterActionProvider = Provider<IncrementCounter>((ref) {
   final countersRepository = ref.watch(repositoryProvider);
-  CounterLogger.info("Creating increment counter action ${countersRepository.runtimeType}");
 
   return IncrementCounter(countersRepository: countersRepository);
 });
 
 final listCounterActionProvider = Provider<ListCounters>((ref) {
   final countersRepository = ref.watch(repositoryProvider);
-  CounterLogger.info("Creating list counter action ${countersRepository.runtimeType}");
 
   return ListCounters(countersRepository: countersRepository);
 });
 
 final deleteCounterActionProvider = Provider<DeleteCounter>((ref) {
   final countersRepository = ref.watch(repositoryProvider);
-  CounterLogger.info("Creating delete counter action ${countersRepository.runtimeType}");
 
   return DeleteCounter(countersRepository: countersRepository);
 });

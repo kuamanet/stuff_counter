@@ -19,6 +19,7 @@ void main() async {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
   }
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(const ProviderScope(
     child: CountersApp(),

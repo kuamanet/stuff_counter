@@ -26,6 +26,7 @@ class RealTimeCountersRepository implements CountersRepository {
           name: counter.name,
           count: counter.count,
           color: counter.color,
+          secret: counter.secret,
           history: counter.history,
         ),
       );

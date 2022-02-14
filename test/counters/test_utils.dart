@@ -28,6 +28,7 @@ CounterCreateDto createEmptyCounter() {
     name: "name",
     count: 0,
     color: Colors.amber.toString(),
+    secret: false,
     history: const [],
   );
 }
@@ -38,6 +39,7 @@ CounterReadDto readEmptyCounter({String id = "id", int count = 0, history = cons
     name: "name",
     count: count,
     color: Colors.amber.toString(),
+    secret: false,
     history: history,
   );
 }

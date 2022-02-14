@@ -4,13 +4,45 @@ import 'package:kcounter/builders/counters_list_stream_builder.dart';
 import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counters_icon_button.dart';
+import 'package:shake/shake.dart';
 
-class DashboardPage extends ConsumerWidget {
+class DashboardPage extends ConsumerStatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _DashboardPage();
+}
+
+class _DashboardPage extends ConsumerState<DashboardPage> {
+  bool showSecretCounters = false;
+
+  late ShakeDetector _detector;
+
+  @override
+  void initState() {
+    _detector = ShakeDetector.autoStart(
+      onPhoneShake: () {
+        setState(() {
+          showSecretCounters = !showSecretCounters;
+        });
+      },
+      // shakeThresholdGravity: 0,
+      // shakeSlopTimeMS: 0,
+      // shakeCountResetTime: 0,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _detector.stopListening();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final router = ref.read(routeProvider.notifier);
+
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: CountersIconButton(
@@ -25,6 +57,7 @@ class DashboardPage extends ConsumerWidget {
         children: [
           CountersListStreamBuilder(
             action: ref.read(listCounterActionProvider),
+            showSecretCounters: showSecretCounters,
           ),
           Positioned(
             right: CountersSpacing.smallSpace,
