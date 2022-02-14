@@ -23,6 +23,7 @@ class _CreateCounterPageState extends ConsumerState<CreateCounterPage> {
   final TextEditingController nameController = TextEditingController();
   bool isLoading = false;
   Color? counterColor;
+  bool secretCounter = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,41 @@ class _CreateCounterPageState extends ConsumerState<CreateCounterPage> {
           ColorPickerRow(onColorChanged: (color) {
             counterColor = color;
           }),
+          CountersSpacing.spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Should this counter be secret?"),
+                    CountersSpacing.spacer(height: CountersSpacing.smallSpace),
+                    Text(
+                      "If you activate this option, this counter will be visible only when you shake your phone",
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: CountersSpacing.midSpace),
+              NeumorphicSwitch(
+                style: const NeumorphicSwitchStyle(
+                  inactiveTrackColor: Colors.white,
+                  inactiveThumbColor: Colors.white,
+                  activeThumbColor: Colors.black,
+                  activeTrackColor: Colors.white,
+                ),
+                value: secretCounter,
+                onChanged: (secretSwitchValue) {
+                  setState(() {
+                    secretCounter = secretSwitchValue;
+                  });
+                },
+              ),
+            ],
+          ),
           const Spacer(flex: 1),
           CountersIconButton(
             onPressed: () async {
@@ -60,13 +96,16 @@ class _CreateCounterPageState extends ConsumerState<CreateCounterPage> {
               try {
                 final action = ref.read(createCounterActionProvider);
 
-                await action.run(CreateCounterParams(
-                  name: nameController.text,
-                  color: counterColor!.asCounterColor(),
-                ));
+                await action.run(
+                  CreateCounterParams(
+                    name: nameController.text,
+                    color: counterColor!.asCounterColor(),
+                    secret: secretCounter,
+                  ),
+                );
 
                 final router = ref.read(routeProvider.notifier);
-                context.snack("Counter was created 🚀🚀🚀🚀");
+                context.snack("Counter ${nameController.text} was created 🚀🚀🚀🚀");
                 router.toDashboardPage();
               } catch (error, stacktrace) {
                 context.snack("Could not create counter");

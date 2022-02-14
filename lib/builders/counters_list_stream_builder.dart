@@ -8,13 +8,12 @@ import 'package:kcounter/widgets/user_greeting.dart';
 
 class CountersListStreamBuilder extends StreamBuilder<List<CounterReadDto>> {
   final ListCounters action;
+  final bool? showSecretCounters;
 
-  CountersListStreamBuilder({
-    Key? key,
-    required this.action,
-  }) : super(
+  CountersListStreamBuilder({Key? key, required this.action, this.showSecretCounters})
+      : super(
           key: key,
-          stream: action.run(),
+          stream: action.run(ListCountersParams(showSecretCounters: showSecretCounters ?? false)),
           builder: (context, countersSnapshot) {
             switch (countersSnapshot.connectionState) {
               case ConnectionState.waiting:

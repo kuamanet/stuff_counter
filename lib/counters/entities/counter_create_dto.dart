@@ -12,6 +12,9 @@ class CounterCreateDto extends Equatable implements Copyable<CounterCreateDto> {
   /// Color of the counter, in rgb format
   final String color;
 
+  /// Whether this counter should be shown by default
+  final bool secret;
+
   /// History of increments of this counter
   final List<CounterLog> history;
 
@@ -20,26 +23,24 @@ class CounterCreateDto extends Equatable implements Copyable<CounterCreateDto> {
     required this.count,
     required this.color,
     required this.history,
+    required this.secret,
   });
 
   @override
-  List<Object?> get props => [name, color, count];
+  List<Object?> get props => [name, color, count, secret];
 
   @override
   bool? get stringify => false;
 
   @override
-  CounterCreateDto copyWith({
-    String? name,
-    int? count,
-    String? color,
-    List<CounterLog>? history,
-  }) {
+  CounterCreateDto copyWith(
+      {String? name, int? count, String? color, List<CounterLog>? history, bool? secret}) {
     return CounterCreateDto(
       name: name ?? this.name,
       count: count ?? this.count,
       color: color ?? this.color,
       history: history ?? this.history,
+      secret: secret ?? this.secret,
     );
   }
 
@@ -48,6 +49,7 @@ class CounterCreateDto extends Equatable implements Copyable<CounterCreateDto> {
       "count": count,
       "name": name,
       "color": color,
+      "secret": secret,
       "history": history.map((e) => e.toMap()).toList(),
     };
   }

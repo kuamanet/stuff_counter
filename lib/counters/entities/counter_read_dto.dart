@@ -10,21 +10,30 @@ class CounterReadDto extends CounterCreateDto {
     required count,
     required color,
     required history,
+    required secret,
   }) : super(
           name: name,
           count: count,
           color: color,
+          secret: secret,
           history: history,
         );
 
   @override
-  CounterReadDto copyWith(
-      {String? id, String? name, int? count, String? color, List<CounterLog>? history}) {
+  CounterReadDto copyWith({
+    String? id,
+    String? name,
+    int? count,
+    String? color,
+    bool? secret,
+    List<CounterLog>? history,
+  }) {
     return CounterReadDto(
       id: id ?? this.id,
       name: name ?? this.name,
       count: count ?? this.count,
       color: color ?? this.color,
+      secret: secret ?? this.secret,
       history: history ?? this.history,
     );
   }
@@ -36,6 +45,7 @@ class CounterReadDto extends CounterCreateDto {
       "count": count,
       "name": name,
       "color": color,
+      "secret": secret,
       "history": history.map((e) => e.toMap()).toList(),
     };
   }
@@ -48,6 +58,7 @@ class CounterReadDto extends CounterCreateDto {
           name: value["name"],
           count: value["count"],
           color: value["color"],
+          secret: value.containsKey("secret") ? value["secret"] : false,
           history: historyMap.map((e) => CounterLog.from(Map<String, dynamic>.from(e))).toList());
     }
 
@@ -55,5 +66,5 @@ class CounterReadDto extends CounterCreateDto {
   }
 
   @override
-  List<Object?> get props => [id, name, color, count];
+  List<Object?> get props => [id, name, color, count, secret];
 }

@@ -23,7 +23,7 @@ void main() {
     final action = ListCounters(countersRepository: repo);
 
     expect(
-        action.run(),
+        action.run(ListCountersParams(showSecretCounters: false)),
         emitsInOrder([
           equals([mockCounter]),
           emitsDone
