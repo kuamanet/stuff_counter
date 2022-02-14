@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 class SettingsDto extends Equatable {
   final bool online;
 
-  // TODO not sure if this should be here, probaly not, but until we implement authentication this is an handy place
   final bool authenticated;
 
   const SettingsDto({required this.online, required this.authenticated});

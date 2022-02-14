@@ -20,7 +20,7 @@ class UserGreeting extends ConsumerWidget {
                   color: Colors.black45,
                 ),
           ),
-          const SizedBox(height: CountersSpacing.smallSpace),
+          const SizedBox(height: CountersSpacing.space100),
           Text(
             authState.value?.username ?? "",
             style: Theme.of(context).textTheme.headline5,

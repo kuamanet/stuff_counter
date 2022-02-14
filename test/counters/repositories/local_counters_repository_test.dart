@@ -143,6 +143,7 @@ void main() {
       repo.getAll(),
       emitsInOrder(
         [
+          [],
           [entity, entity2],
           emitsDone
         ],

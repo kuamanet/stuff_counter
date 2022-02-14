@@ -10,6 +10,7 @@ import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/authentication_dialog.dart';
 import 'package:kcounter/widgets/counter_header.dart';
 import 'package:kcounter/widgets/counters_scaffold.dart';
+import 'package:kcounter/widgets/counters_switch.dart';
 import 'package:kcounter/widgets/settings_logout_button.dart';
 
 class SettingsPage extends ConsumerWidget {
@@ -31,13 +32,7 @@ class SettingsPage extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text("Store counters online"),
-                    NeumorphicSwitch(
-                      style: const NeumorphicSwitchStyle(
-                        inactiveTrackColor: Colors.white,
-                        inactiveThumbColor: Colors.white,
-                        activeThumbColor: Colors.black,
-                        activeTrackColor: Colors.white,
-                      ),
+                    CountersSwitch(
                       value: settings.value?.online ?? false,
                       onChanged: (value) async {
                         if (value == true) {

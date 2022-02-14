@@ -7,9 +7,11 @@ import 'package:kcounter/counters/actions/create_counter.dart';
 import 'package:kcounter/counters/actions/decrease_counter.dart';
 import 'package:kcounter/counters/actions/delete_counter.dart';
 import 'package:kcounter/counters/actions/generate_random_color.dart';
+import 'package:kcounter/counters/actions/get_counter.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/counters/actions/increment_counter.dart';
 import 'package:kcounter/counters/actions/list_counters.dart';
+import 'package:kcounter/counters/actions/update_counter.dart';
 import 'package:kcounter/counters/core/counters_repository.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/counters/repositories/local_counters_repository.dart';
@@ -38,6 +40,18 @@ final createCounterActionProvider = Provider<CreateCounter>((ref) {
   final countersRepository = ref.watch(repositoryProvider);
 
   return CreateCounter(countersRepository: countersRepository);
+});
+
+final updateCounterActionProvider = Provider<UpdateCounter>((ref) {
+  final countersRepository = ref.watch(repositoryProvider);
+
+  return UpdateCounter(countersRepository: countersRepository);
+});
+
+final readCounterActionProvider = Provider<GetCounter>((ref) {
+  final countersRepository = ref.watch(repositoryProvider);
+
+  return GetCounter(countersRepository: countersRepository);
 });
 
 final incrementCounterActionProvider = Provider<IncrementCounter>((ref) {

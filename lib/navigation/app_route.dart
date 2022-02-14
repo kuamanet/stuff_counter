@@ -5,6 +5,7 @@ enum AppRouteName {
   create,
   graph,
   settings,
+  update,
 }
 
 class AppRoute {

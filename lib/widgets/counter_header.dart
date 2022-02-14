@@ -5,15 +5,24 @@ import 'package:kcounter/widgets/counter_back_button.dart';
 class CounterHeader extends StatelessWidget {
   final String? title;
   final Widget? content;
-  const CounterHeader({this.title, this.content, Key? key}) : super(key: key);
+  final void Function()? onBack;
+
+  const CounterHeader({
+    this.title,
+    this.content,
+    this.onBack,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const CounterBackButton(),
-        const SizedBox(height: CountersSpacing.midSpace),
+        CounterBackButton(
+          onPressed: onBack,
+        ),
+        const SizedBox(height: CountersSpacing.space600),
         if (content != null) content!,
         if (title != null)
           Text(
