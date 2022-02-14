@@ -123,9 +123,9 @@ void main() {
     final entity2 = readEmptyCounter(id: "id2");
 
     when(() {
-      return ref.stream;
-    }).thenAnswer((_) async* {
-      yield {
+      return ref.get();
+    }).thenAnswer((_) async {
+      return {
         entity.id: entity.toMap(),
         entity2.id: entity2.toMap(),
       };

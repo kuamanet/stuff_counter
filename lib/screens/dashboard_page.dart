@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kcounter/builders/counters_list_stream_builder.dart';
 import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counters_icon_button.dart';
-import 'package:kcounter/widgets/counters_list.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -21,8 +21,11 @@ class DashboardPage extends ConsumerWidget {
         },
       ),
       body: Stack(
+        fit: StackFit.expand,
         children: [
-          const CountersList(),
+          CountersListStreamBuilder(
+            action: ref.read(listCounterActionProvider),
+          ),
           Positioned(
             right: CountersSpacing.smallSpace,
             top: CountersSpacing.safeSpace,

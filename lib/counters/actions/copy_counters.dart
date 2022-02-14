@@ -13,14 +13,8 @@ class CopyCounters extends Action<void> {
   @override
   Future<void> run() async {
     final countersToCopy = await from.getAll().first;
-    final countersToDelete = await to.getAll().first;
-
-    for (var counter in countersToDelete) {
-      await to.delete(counter.id);
-    }
-
     for (var counter in countersToCopy) {
-      await to.create(counter);
+      await to.create(counter, counter.id);
     }
   }
 }

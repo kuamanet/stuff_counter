@@ -93,10 +93,15 @@ void main() {
     }).thenReturn(ref);
 
     final snapshotMock = DataSnapshotMock();
+    final event = DatabaseEventMock();
+
+    when(() {
+      return event.snapshot;
+    }).thenReturn(snapshotMock);
 
     when(() {
       return snapshotMock.value;
-    }).thenReturn({entity.id: entity.toMap()});
+    }).thenReturn(entity.toMap());
 
     when(() {
       return snapshotMock.exists;
@@ -107,8 +112,8 @@ void main() {
     }).thenReturn(entity.id);
 
     when(() {
-      return ref.get();
-    }).thenAnswer((_) async => snapshotMock);
+      return ref.once();
+    }).thenAnswer((_) async => event);
 
     final result = await repo.getOne(entity.id);
 
@@ -116,7 +121,7 @@ void main() {
 
     verifyInOrder([
       () => ref.child(entity.id),
-      () => ref.get(),
+      () => ref.once(),
     ]);
   });
 

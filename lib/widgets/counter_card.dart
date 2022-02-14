@@ -53,7 +53,7 @@ class CounterCard extends ConsumerWidget {
 
   void _increaseCount(WidgetRef ref, BuildContext context) async {
     try {
-      final action = await ref.read(incrementCounterActionProvider.future);
+      final action = ref.read(incrementCounterActionProvider);
 
       await action.run(counter.id);
 

@@ -40,14 +40,22 @@ class SettingsPage extends ConsumerWidget {
                       ),
                       value: settings.value?.online ?? false,
                       onChanged: (value) async {
-                        if (value == true && (settings.value?.authenticated ?? false) == false) {
+                        if (value == true) {
+                          if (settings.value?.authenticated == true) {
+                            // nothing to do
+
+                            return;
+                          }
+
                           AuthenticationResult result = await showDialog(
                             context: context,
                             builder: (_) => const AuthenticationDialog(),
                           );
 
                           if (result == AuthenticationResult.success) {
-                            // TODO copy local counters to remote
+                            final action = await ref.read(localToRemoteActionProvider.future);
+
+                            await action.run();
 
                             await _updateLocalSettings(
                               value: value,
@@ -58,26 +66,40 @@ class SettingsPage extends ConsumerWidget {
                             );
                           }
                         } else {
-                          // TODO copy remote counters to local
-                          await _updateLocalSettings(
-                            value: value,
-                            context: context,
-                            ref: ref,
-                            settings: settings,
-                          );
+                          if (settings.value == null || settings.value?.authenticated == false) {
+                            // nothing to do
+
+                            return;
+                          }
+
+                          _onLogout(ref);
                         }
                       },
                     ),
                   ],
                 ),
                 const Spacer(),
-                const SettingsLogoutButton(),
+                SettingsLogoutButton(
+                  onPressed: () => _onLogout(ref),
+                ),
               ],
             ),
           )
         ],
       ),
     );
+  }
+
+  void _onLogout(WidgetRef ref) async {
+    try {
+      final action = await ref.read(remoteToLocalActionProvider.future);
+
+      await action.run();
+
+      await ref.read(signOutProvider.future);
+    } catch (error, stacktrace) {
+      CounterLogger.error("While trying to sign out", error, stacktrace);
+    }
   }
 
   Future<void> _updateLocalSettings({

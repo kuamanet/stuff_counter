@@ -26,23 +26,13 @@ void main() {
       yield [mockCounter];
     });
     when(() {
-      return repo2.getAll();
-    }).thenAnswer((_) async* {
-      yield [mockCounter];
-    });
-    when(() {
-      return repo2.delete(any());
-    }).thenAnswer((_) => Future.value());
-
-    when(() {
-      return repo2.create(any());
+      return repo2.create(any(), any());
     }).thenAnswer((_) => Future.value());
 
     final action = CopyCounters(from: repo, to: repo2);
     await action.run();
 
     verify(() => repo.getAll());
-    verify(() => repo2.delete(any()));
-    verify(() => repo2.create(any()));
+    verify(() => repo2.create(any(), any()));
   });
 }

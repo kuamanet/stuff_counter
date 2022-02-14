@@ -163,7 +163,7 @@ class _CounterChartPageState extends ConsumerState<CounterChartPage> {
       if (counter == null) {
         return;
       }
-      final action = await ref.read(deleteCounterActionProvider.future);
+      final action = ref.read(deleteCounterActionProvider);
 
       await action.run(counter.id);
 

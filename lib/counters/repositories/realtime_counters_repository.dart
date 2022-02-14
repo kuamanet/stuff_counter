@@ -18,8 +18,20 @@ class RealTimeCountersRepository implements CountersRepository {
   }
 
   @override
-  Future create(CounterCreateDto counter) async {
-    await _ref.push().set(counter.toMap());
+  Future create(CounterCreateDto counter, [String? id]) async {
+    if (id != null) {
+      await update(
+        CounterReadDto(
+          id: id,
+          name: counter.name,
+          count: counter.count,
+          color: counter.color,
+          history: counter.history,
+        ),
+      );
+    } else {
+      await _ref.push().set(counter.toMap());
+    }
   }
 
   @override
@@ -42,10 +54,11 @@ class RealTimeCountersRepository implements CountersRepository {
   Future<CounterReadDto> getOne(String id) async {
     // todo this should be a stream
     final child = _ref.child(id);
-    final snapshot = await child.get();
-    if (snapshot.exists) {
-      final record = snapshot.value! as Map<dynamic, dynamic>;
-      return CounterReadDto.from(Map<String, dynamic>.from(record[snapshot.key]), snapshot.key!);
+    final event = await child.once();
+
+    if (event.snapshot.exists) {
+      final record = event.snapshot.value! as Map<dynamic, dynamic>;
+      return CounterReadDto.from(Map<String, dynamic>.from(record), event.snapshot.key!);
     }
 
     throw ArgumentError("Record $id not found");
