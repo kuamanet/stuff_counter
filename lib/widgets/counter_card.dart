@@ -7,8 +7,8 @@ import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 import 'package:kcounter/theme/neumorphic_constants.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
+import 'package:kcounter/widgets/counter_card_button.dart';
 import 'package:kcounter/widgets/counter_card_chart.dart';
-import 'package:kcounter/widgets/counter_card_increase_button.dart';
 import 'package:kcounter/widgets/counter_details.dart';
 
 class CounterCard extends ConsumerWidget {
@@ -38,8 +38,25 @@ class CounterCard extends ConsumerWidget {
               children: [
                 CounterDetails(counter: counter),
                 const Spacer(),
-                CounterCardIncreaseButton(
-                  onPressed: () => _increaseCount(ref, context),
+                Column(
+                  children: [
+                    CounterCardButton(
+                      onPressed: () => _increaseCount(ref, context),
+                      color: Colors.white,
+                      background: Colors.black,
+                      icon: Icons.arrow_upward,
+                    ),
+                    const SizedBox(height: CountersSpacing.smallSpace),
+                    if (counter.count > 0)
+                      CounterCardButton(
+                        onPressed: () => _decreaseCount(ref, context),
+                        color: Colors.black,
+                        background: Colors.white,
+                        icon: Icons.arrow_downward,
+                        elevation: 0,
+                        size: CountersSpacing.padding100,
+                      ),
+                  ],
                 )
               ],
             ),
@@ -62,6 +79,21 @@ class CounterCard extends ConsumerWidget {
       router.toDashboardPage();
     } catch (error, stacktrace) {
       context.snack("Could not increment counter");
+      CounterLogger.error("While incrementing the counter", error, stacktrace);
+    }
+  }
+
+  void _decreaseCount(WidgetRef ref, BuildContext context) async {
+    try {
+      final action = ref.read(decreaseCounterActionProvider);
+
+      await action.run(counter.id);
+
+      final router = ref.read(routeProvider.notifier);
+      context.snack("Counter was decreased 🚀🚀🚀🚀");
+      router.toDashboardPage();
+    } catch (error, stacktrace) {
+      context.snack("Could not decrement counter");
       CounterLogger.error("While incrementing the counter", error, stacktrace);
     }
   }

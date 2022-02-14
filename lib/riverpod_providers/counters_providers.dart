@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/authentication/entities/authentication_entities.dart';
 import 'package:kcounter/counters/actions/copy_counters.dart';
 import 'package:kcounter/counters/actions/create_counter.dart';
+import 'package:kcounter/counters/actions/decrease_counter.dart';
 import 'package:kcounter/counters/actions/delete_counter.dart';
 import 'package:kcounter/counters/actions/generate_random_color.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
@@ -43,6 +44,12 @@ final incrementCounterActionProvider = Provider<IncrementCounter>((ref) {
   final countersRepository = ref.watch(repositoryProvider);
 
   return IncrementCounter(countersRepository: countersRepository);
+});
+
+final decreaseCounterActionProvider = Provider<DecreaseCounter>((ref) {
+  final countersRepository = ref.watch(repositoryProvider);
+
+  return DecreaseCounter(countersRepository: countersRepository);
 });
 
 final listCounterActionProvider = Provider<ListCounters>((ref) {
