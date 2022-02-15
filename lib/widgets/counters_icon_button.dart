@@ -2,7 +2,8 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class CountersIconButton extends StatefulWidget {
   final EdgeInsets? padding;
-  final IconData icon;
+  final IconData? icon;
+  final Widget? child;
   final bool? loading;
   final bool? disableDepth;
   final void Function()? onPressed;
@@ -10,7 +11,8 @@ class CountersIconButton extends StatefulWidget {
   final Color? background;
   const CountersIconButton({
     Key? key,
-    required this.icon,
+    this.icon,
+    this.child,
     this.padding,
     this.disableDepth,
     this.color,
@@ -37,10 +39,12 @@ class _CountersIconButtonState extends State<CountersIconButton> {
       padding: widget.padding,
       child: widget.loading == true
           ? const CircularProgressIndicator()
-          : Icon(
-              widget.icon,
-              color: widget.color,
-            ),
+          : widget.icon != null
+              ? Icon(
+                  widget.icon,
+                  color: widget.color,
+                )
+              : widget.child,
     );
   }
 }
