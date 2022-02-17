@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kcounter/navigation/web_route.dart';
@@ -10,73 +9,78 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(1, 216, 216, 216),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Spacer(),
-          Neumorphic(
-            style: const NeumorphicStyle(
-              depth: 8,
-              color: Color.fromARGB(1, 216, 216, 216),
-              boxShape: NeumorphicBoxShape.circle(),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(CountersSpacing.padding600),
-              child: Image.asset(
-                "icon/icon.png",
-                height: CountersSpacing.space600,
-                fit: BoxFit.fitHeight,
+      backgroundColor: const Color.fromARGB(1, 216, 216, 216),
+      body: Padding(
+        padding: const EdgeInsets.all(CountersSpacing.padding600),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Spacer(),
+            Neumorphic(
+              style: const NeumorphicStyle(
+                depth: 8,
+                color: Color.fromARGB(1, 216, 216, 216),
+                boxShape: NeumorphicBoxShape.circle(),
               ),
-            ),
-          ),
-          const SizedBox(height: CountersSpacing.padding300),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              NeumorphicText(
-                "K".toUpperCase(),
-                style: const NeumorphicStyle(
-                  depth: 9, //customize depth here
-                  intensity: 0.75,
-                  surfaceIntensity: 0,
-                  color: Colors.black, //customize color here
+              child: Padding(
+                padding: const EdgeInsets.all(CountersSpacing.padding600),
+                child: Image.asset(
+                  "icon/icon.png",
+                  height: CountersSpacing.space600,
+                  fit: BoxFit.fitHeight,
                 ),
-                textStyle: NeumorphicTextStyle(
-                    fontSize: 130, //customize size here
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 5,
-                    fontFamily: GoogleFonts.montserrat().fontFamily),
               ),
-              NeumorphicText(
-                "Counter".toUpperCase(),
-                style: const NeumorphicStyle(
-                  depth: 9, //customize depth here
-                  intensity: 0.75,
-                  surfaceIntensity: 0,
-                  color: Colors.white, //customize color here
-                ),
-                textStyle: NeumorphicTextStyle(
-                    fontSize: 130, //customize size here
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 5,
-                    fontFamily: GoogleFonts.montserrat().fontFamily),
-              ),
-            ],
-          ),
-          const SizedBox(height: CountersSpacing.padding300),
-          Text(
-            "Count all the things that matter to you",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat(
-              textStyle: Theme.of(context).textTheme.headline4,
-              color: Colors.black87,
             ),
-          ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(CountersSpacing.padding600),
-            child: Column(
+            const SizedBox(height: CountersSpacing.padding300),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 200),
+              child: FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    NeumorphicText(
+                      "K".toUpperCase(),
+                      style: const NeumorphicStyle(
+                        depth: 9, //customize depth here
+                        intensity: 0.75,
+                        surfaceIntensity: 0,
+                        color: Colors.black, //customize color here
+                      ),
+                      textStyle: NeumorphicTextStyle(
+                          fontSize: 130, //customize size here
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 5,
+                          fontFamily: GoogleFonts.montserrat().fontFamily),
+                    ),
+                    NeumorphicText(
+                      "Counter".toUpperCase(),
+                      style: const NeumorphicStyle(
+                        depth: 9, //customize depth here
+                        intensity: 0.75,
+                        surfaceIntensity: 0,
+                        color: Colors.white, //customize color here
+                      ),
+                      textStyle: NeumorphicTextStyle(
+                          fontSize: 130, //customize size here
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 5,
+                          fontFamily: GoogleFonts.montserrat().fontFamily),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: CountersSpacing.padding300),
+            Text(
+              "Count all the things that matter to you",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.montserrat(
+                textStyle: Theme.of(context).textTheme.headline4,
+                color: Colors.black87,
+              ),
+            ),
+            const Spacer(),
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
@@ -106,8 +110,8 @@ class LandingPage extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
