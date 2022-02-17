@@ -63,7 +63,7 @@ class LocalCountersRepository implements CountersRepository {
   }
 
   @override
-  delete(String id) async {
+  Future<void> delete(String id) async {
     final record = _ref.doc(id);
     await record.delete();
   }

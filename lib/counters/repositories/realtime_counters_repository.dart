@@ -72,7 +72,7 @@ class RealTimeCountersRepository implements CountersRepository {
   }
 
   @override
-  delete(String id) async {
+  Future<void> delete(String id) async {
     final record = _ref.child(id);
     await record.remove();
   }
