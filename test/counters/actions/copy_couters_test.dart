@@ -26,6 +26,11 @@ void main() {
       yield [mockCounter];
     });
     when(() {
+      return repo2.getAll();
+    }).thenAnswer((_) async* {
+      yield [mockCounter];
+    });
+    when(() {
       return repo2.create(any(), any());
     }).thenAnswer((_) => Future.value());
 

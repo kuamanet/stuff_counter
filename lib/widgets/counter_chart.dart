@@ -2,7 +2,6 @@ import 'package:charts_flutter/flutter.dart' as chart;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
-import 'package:kcounter/counters/core/counter_logger.dart';
 import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/extensions/counter_log.dart';
 import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
@@ -39,11 +38,7 @@ class _CounterChartState extends ConsumerState<CounterChart> {
   @override
   Widget build(BuildContext context) {
     final groupedLogs = ref.watch(counterLogsGrouperProvider);
-    CounterLogger.info("${widget.counter.name} - start");
-    groupedLogs.forEach((key, value) {
-      CounterLogger.info("$key - ${value.length}");
-    });
-    CounterLogger.info("${widget.counter.name} - end");
+
     return chart.TimeSeriesChart(
       [
         // TODO how to set line width / can it be rounded on the edges?

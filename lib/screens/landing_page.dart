@@ -203,27 +203,6 @@ class Logo extends StatelessWidget {
   }
 }
 
-class ScreenshotsGrid extends StatelessWidget {
-  final List<Widget> children;
-  const ScreenshotsGrid({
-    required this.children,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Opacity(
-      opacity: 0.8,
-      child: GridView.count(
-        crossAxisCount: 1,
-        mainAxisSpacing: CountersSpacing.space600,
-        crossAxisSpacing: CountersSpacing.space600,
-        children: children,
-      ),
-    );
-  }
-}
-
 class Snapshot extends StatelessWidget {
   final String asset;
   const Snapshot({

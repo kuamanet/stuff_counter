@@ -20,9 +20,6 @@ class LandingApp extends StatelessWidget {
           inversePrimary: Colors.black,
         ),
       ),
-      // onGenerateTitle: (context) {
-      //
-      // },
       routes: {
         landingPath: (context) => const LandingPage(),
         privacyPath: (_) => const PrivacyPage(),
