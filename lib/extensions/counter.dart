@@ -5,7 +5,7 @@ import 'package:kcounter/counters/entities/counter_read_dto.dart';
 extension CounterReadDtoExtension on CounterReadDto {
   String get lastUpdate {
     final logs = [...history];
-    logs.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    logs.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     final mostRecentLog = logs.firstOrNull;
 
     if (mostRecentLog != null) {
