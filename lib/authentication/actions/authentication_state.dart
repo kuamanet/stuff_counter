@@ -23,7 +23,7 @@ class AuthenticationStateStream extends StreamAction<Authentication> {
         return Authentication(state: AuthenticationState.signedOut);
       }
 
-      await updateLocalSettingsAction.run(UpdateSettingsParams(authenticated: true));
+      await updateLocalSettingsAction.run(UpdateSettingsParams(authenticated: true, online: true));
       return Authentication(
         state: AuthenticationState.signedIn,
         username: user.displayName,
