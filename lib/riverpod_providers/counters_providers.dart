@@ -29,11 +29,16 @@ final randomColorActionProvider = FutureProvider.autoDispose<Color>((_) async {
 final repositoryProvider = Provider<CountersRepository>((ref) {
   final authState = ref.watch(authProvider);
 
-  if (authState.value?.state == AuthenticationState.signedIn) {
-    return RealTimeCountersRepository(FirebaseDatabase.instance, "${authState.value!.uid}/");
-  }
+  final repository = authState.value?.state == AuthenticationState.signedIn
+      ? RealTimeCountersRepository(FirebaseDatabase.instance, "${authState.value!.uid}/")
+      : LocalCountersRepository(Localstore.instance);
 
-  return LocalCountersRepository(Localstore.instance);
+  // refresh providers that depend on us
+  Future.delayed(const Duration(milliseconds: 100), () {
+    refreshCountersProviders(ref.container);
+  });
+
+  return repository;
 });
 
 final createCounterActionProvider = Provider<CreateCounter>((ref) {
@@ -68,7 +73,6 @@ final decreaseCounterActionProvider = Provider<DecreaseCounter>((ref) {
 
 final listCounterActionProvider = Provider<ListCounters>((ref) {
   final countersRepository = ref.watch(repositoryProvider);
-
   return ListCounters(countersRepository: countersRepository);
 });
 
@@ -125,3 +129,19 @@ final remoteToLocalActionProvider = FutureProvider<CopyCounters>((ref) async {
 
   return CopyCounters(from: source, to: destination);
 });
+
+// Since we are not using stream providers to provide actions in order to keep the ui more simple,
+// we need to manually trigger the refresh of the actions when the repository changes between local and remote
+void refreshCountersProviders(ProviderContainer container) {
+  for (var provider in [
+    deleteCounterActionProvider,
+    listCounterActionProvider,
+    decreaseCounterActionProvider,
+    incrementCounterActionProvider,
+    readCounterActionProvider,
+    updateCounterActionProvider,
+    createCounterActionProvider,
+  ]) {
+    container.refresh(provider);
+  }
+}
