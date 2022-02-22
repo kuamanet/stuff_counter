@@ -39,6 +39,7 @@ class RealTimeCountersRepository implements CountersRepository {
   Stream<List<CounterReadDto>> getAll() {
     return _ref.onValue.map((event) {
       final snapshot = event.snapshot;
+
       if (snapshot.exists && snapshot.value is Map<dynamic, dynamic>) {
         final rawList = snapshot.value as Map<dynamic, dynamic>;
         final items = <CounterReadDto>[];

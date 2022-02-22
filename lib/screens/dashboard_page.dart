@@ -53,7 +53,7 @@ class _DashboardPage extends ConsumerState<DashboardPage> {
         fit: StackFit.expand,
         children: [
           CountersListStreamBuilder(
-            action: ref.read(listCounterActionProvider),
+            action: ref.watch(listCounterActionProvider),
             showSecretCounters: showSecretCounters,
           ),
           Positioned(
