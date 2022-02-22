@@ -143,11 +143,55 @@ void main() {
       repo.getAll(),
       emitsInOrder(
         [
-          [],
           [entity, entity2],
-          emitsDone
         ],
       ),
     );
+  });
+
+  test("it emits on list stream after delete", () async {
+    final entity = readEmptyCounter();
+    final entity2 = readEmptyCounter(id: "id2");
+    var cache = {
+      entity.id: entity.toMap(),
+      entity2.id: entity2.toMap(),
+    };
+
+    when(() {
+      return ref.doc(any());
+    }).thenAnswer((_) => document);
+
+    when(() {
+      return ref.stream;
+    }).thenAnswer((_) async* {
+      yield cache;
+    });
+
+    when(() {
+      return ref.get();
+    }).thenAnswer((_) async {
+      return cache;
+    });
+
+    when(() {
+      return document.delete();
+    }).thenAnswer((_) async {
+      cache.remove(entity2.id);
+    });
+
+    expect(
+      repo.getAll(),
+      emitsInOrder(
+        [
+          [entity, entity2],
+          [entity]
+        ],
+      ),
+    );
+
+    // give time to our list stream to propagate its initial value
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    await repo.delete(entity2.id);
   });
 }

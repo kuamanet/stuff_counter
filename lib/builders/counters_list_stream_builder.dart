@@ -20,8 +20,6 @@ class CountersListStreamBuilder extends StreamBuilder<List<CounterReadDto>> {
                 return const Center(child: CircularProgressIndicator());
               default:
                 if (countersSnapshot.hasError) {
-                  // context.snack("Could not load counters list");
-
                   CounterLogger.error(
                     "while loading counters list",
                     countersSnapshot.error,
