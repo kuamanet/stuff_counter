@@ -28,7 +28,7 @@ class UpdateSettings extends ParamsAction<UpdateSettingsParams, void> {
     final storedValue = await record.get();
     final value = storedValue == null ? SettingsDto.defaultValue() : SettingsDto.from(storedValue);
     final nextValue = value.copyWith(
-      online: params.online ?? value.online,
+      online: params.online ?? params.authenticated ?? value.online,
       dailyReminder: params.dailyReminder ?? value.dailyReminder,
       authenticated: params.authenticated ?? value.authenticated,
     );

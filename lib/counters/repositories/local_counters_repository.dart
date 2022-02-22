@@ -38,6 +38,8 @@ class LocalCountersRepository implements CountersRepository {
       history: counter.history,
     );
     await _ref.doc(documentId).set(counterRead.toMap());
+
+    _refreshSubject.add(true);
   }
 
   @override
@@ -78,6 +80,7 @@ class LocalCountersRepository implements CountersRepository {
   Future update(CounterReadDto counter) async {
     final record = _ref.doc(counter.id);
     await record.set(counter.toMap());
+    _refreshSubject.add(true);
   }
 
   @override
