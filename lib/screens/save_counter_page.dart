@@ -29,25 +29,28 @@ class _SaveCounterPageState extends ConsumerState<SaveCounterPage> {
   bool isLoading = false;
   Color? counterColor;
   bool secretCounter = false;
+  CounterReadDto? counter;
+
+  @override
+  void initState() {
+    super.initState();
+    counter = ref.watch(routeProvider).currentCounter;
+    secretCounter = counter?.secret ?? secretCounter;
+    nameController.text = counter?.name ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {
-    final counter = ref.watch(routeProvider).currentCounter;
-    secretCounter = counter?.secret ?? secretCounter;
-    if (counter != null) {
-      nameController.text = counter.name;
-    }
-
     return CountersScaffold(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CounterHeader(
-            title: counter != null ? "Update ${counter.name}" : "Add counter",
+            title: counter != null ? "Update ${counter?.name}" : "Add counter",
             onBack: () {
               final router = ref.read(routeProvider.notifier);
               if (counter != null) {
-                router.toGraphPage(counter);
+                router.toGraphPage(counter!);
               } else {
                 router.toDashboardPage();
               }
@@ -106,7 +109,7 @@ class _SaveCounterPageState extends ConsumerState<SaveCounterPage> {
               });
 
               if (counter != null) {
-                await _updateCounter(counter);
+                await _updateCounter(counter!);
               } else {
                 await _createCounter();
               }
