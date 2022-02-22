@@ -38,7 +38,7 @@ class _CountersIconButtonState extends State<CountersIconButton> {
       ),
       padding: widget.padding,
       child: widget.loading == true
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : widget.icon != null
               ? Icon(
                   widget.icon,

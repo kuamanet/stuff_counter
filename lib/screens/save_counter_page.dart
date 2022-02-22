@@ -26,7 +26,7 @@ class SaveCounterPage extends ConsumerStatefulWidget {
 
 class _SaveCounterPageState extends ConsumerState<SaveCounterPage> {
   final TextEditingController nameController = TextEditingController();
-  bool isLoading = false;
+  bool isLoading = true;
   Color? counterColor;
   bool secretCounter = false;
   CounterReadDto? counter;
@@ -34,9 +34,11 @@ class _SaveCounterPageState extends ConsumerState<SaveCounterPage> {
   @override
   void initState() {
     super.initState();
-    counter = ref.watch(routeProvider).currentCounter;
-    secretCounter = counter?.secret ?? secretCounter;
-    nameController.text = counter?.name ?? "";
+    Future.delayed(const Duration(milliseconds: 0), () {
+      counter = ref.watch(routeProvider).currentCounter;
+      secretCounter = counter?.secret ?? secretCounter;
+      nameController.text = counter?.name ?? "";
+    });
   }
 
   @override
