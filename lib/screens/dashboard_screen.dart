@@ -6,14 +6,14 @@ import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counters_icon_button.dart';
 import 'package:shake/shake.dart';
 
-class DashboardPage extends ConsumerStatefulWidget {
-  const DashboardPage({Key? key}) : super(key: key);
+class DashboardScreen extends ConsumerStatefulWidget {
+  const DashboardScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _DashboardPage();
+  ConsumerState<ConsumerStatefulWidget> createState() => _DashboardScreen();
 }
 
-class _DashboardPage extends ConsumerState<DashboardPage> {
+class _DashboardScreen extends ConsumerState<DashboardScreen> {
   bool showSecretCounters = false;
 
   late ShakeDetector _detector;
@@ -61,6 +61,7 @@ class _DashboardPage extends ConsumerState<DashboardPage> {
             top: CountersSpacing.spaceSafe,
             child: CountersIconButton(
               disableDepth: true,
+              background: Colors.transparent,
               icon: Icons.more_vert,
               onPressed: () {
                 router.toSettingsPage();

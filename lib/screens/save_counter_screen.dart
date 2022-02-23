@@ -15,18 +15,18 @@ import 'package:kcounter/widgets/counters_scaffold.dart';
 import 'package:kcounter/widgets/counters_switch.dart';
 import 'package:kcounter/widgets/counters_text_field.dart';
 
-class SaveCounterPage extends ConsumerStatefulWidget {
+class SaveCounterScreen extends ConsumerStatefulWidget {
   static const valueKey = ValueKey("SaveCounterPage");
 
-  const SaveCounterPage({Key? key}) : super(key: key);
+  const SaveCounterScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<SaveCounterPage> createState() => _SaveCounterPageState();
+  ConsumerState<SaveCounterScreen> createState() => _SaveCounterScreenState();
 }
 
-class _SaveCounterPageState extends ConsumerState<SaveCounterPage> {
+class _SaveCounterScreenState extends ConsumerState<SaveCounterScreen> {
   final TextEditingController nameController = TextEditingController();
-  bool isLoading = true;
+  bool isLoading = false;
   Color? counterColor;
   bool secretCounter = false;
   CounterReadDto? counter;

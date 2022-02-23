@@ -5,6 +5,7 @@ import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/theme/spacing_constants.dart';
 import 'package:kcounter/widgets/counter_card.dart';
 import 'package:kcounter/widgets/user_greeting.dart';
+import 'package:kcounter/widgets/zero_counters.dart';
 
 class CountersListStreamBuilder extends StreamBuilder<List<CounterReadDto>> {
   final ListCounters action;
@@ -29,6 +30,10 @@ class CountersListStreamBuilder extends StreamBuilder<List<CounterReadDto>> {
                 }
 
                 var counters = countersSnapshot.data?.map((e) => CounterCard(counter: e)) ?? [];
+
+                if (counters.isEmpty) {
+                  return const ZeroCounters();
+                }
 
                 return SingleChildScrollView(
                   child: Padding(
