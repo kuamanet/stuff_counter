@@ -12,37 +12,33 @@ dependencies:
   flutter:
     sdk: flutter
 
-  firebase_core: ^1.12.0
-  firebase_analytics: ^9.1.0
-  firebase_crashlytics: ^2.5.1
-  firebase_database: ^9.0.6
+  firebase_core: 1.12.0
+  firebase_analytics: 9.1.0
+  firebase_crashlytics: 2.5.1
+  firebase_database: 9.0.6
 
-  logger: ^1.1.0
-  localstore: ^1.2.1
+  logger: 1.1.0
+  localstore: 1.2.1
 
-  equatable: ^2.0.3
-  collection: ^1.15.0
-  # group counter logs deps start
-  week_of_year: ^2.0.0
-  intl: ^0.17.0
-  # group counter logs deps end
+  equatable: 2.0.3
+  collection: 1.15.0
+  # group counter logs dependencies start
+  week_of_year: 2.0.0
+  intl: 0.17.0
+  # group counter logs dependencies end
 
-  # UI deps
-  flutter_neumorphic: ^3.2.0
-  flutter_riverpod: ^1.0.3
-  flutter_colorpicker: ^1.0.3
-  charts_flutter: ^0.12.0
-  flutter_svg: ^1.0.3
-  firebase_auth: ^3.3.7
-  google_sign_in: ^5.2.4
-  shake: ^2.0.0
-  flutter_local_notifications: ^9.3.2
-  timezone: ^0.8.0
-  url_strategy: ^0.2.0
-  page_transition: ^2.0.5
-  google_fonts: ^2.3.1
-  url_launcher: ^6.0.20
-  rxdart: ^0.27.3
+  # UI dependencies
+  flutter_neumorphic: 3.2.0
+  flutter_riverpod: 1.0.3
+  flutter_colorpicker: 1.0.3
+  flutter_svg: 1.0.3
+  firebase_auth: 3.3.7
+  google_sign_in: 5.2.4
+  shake: 2.0.0
+  flutter_local_notifications: 9.3.2
+  timezone: 0.8.0
+  rxdart: 0.27.3
+  syncfusion_flutter_charts: 19.4.53
 
 dev_dependencies:
   flutter_test:
