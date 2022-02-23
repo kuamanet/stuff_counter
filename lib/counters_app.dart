@@ -55,7 +55,7 @@ Future<void> launchCountersApp() async {
   if (kDebugMode) {
     // Force disable Crashlytics collection while doing every day development.
     // Temporarily toggle this to true if you want to test crash reporting in your app.
-    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
   }
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
