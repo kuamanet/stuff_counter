@@ -16,8 +16,8 @@ import 'package:kcounter/widgets/counters_switch.dart';
 import 'package:kcounter/widgets/settings_logout_button.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-class SettingsPage extends ConsumerWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+class SettingsScreen extends ConsumerWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

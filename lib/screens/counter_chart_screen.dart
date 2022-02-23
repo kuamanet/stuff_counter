@@ -12,15 +12,15 @@ import 'package:kcounter/widgets/counter_details.dart';
 import 'package:kcounter/widgets/counters_button.dart';
 import 'package:kcounter/widgets/group_mode_button.dart';
 
-class CounterChartPage extends ConsumerStatefulWidget {
-  const CounterChartPage({Key? key}) : super(key: key);
+class CounterChartScreen extends ConsumerStatefulWidget {
+  const CounterChartScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<CounterChartPage> createState() => _CounterChartPageState();
+  ConsumerState<CounterChartScreen> createState() => _CounterChartScreenState();
 }
 
-class _CounterChartPageState extends ConsumerState<CounterChartPage> {
-  GroupMode currentMode = GroupMode.month;
+class _CounterChartScreenState extends ConsumerState<CounterChartScreen> {
+  GroupMode currentMode = GroupMode.day;
 
   Widget cancelDeleteBtn = TextButton(
     child: const Text("Cancel"),
