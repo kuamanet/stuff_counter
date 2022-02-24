@@ -31,7 +31,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('app_icon');
+    AndroidInitializationSettings('@drawable/ic_stat_name');
 
 /// Note: permissions aren't requested here just to demonstrate that can be
 /// done later
