@@ -12,12 +12,12 @@ class CounterReadDto extends CounterCreateDto {
     required history,
     required secret,
   }) : super(
-          name: name,
-          count: count,
-          color: color,
-          secret: secret,
-          history: history,
-        );
+    name: name,
+    count: count,
+    color: color,
+    secret: secret,
+    history: history,
+  );
 
   @override
   CounterReadDto copyWith({
@@ -67,4 +67,38 @@ class CounterReadDto extends CounterCreateDto {
 
   @override
   List<Object?> get props => [id, name, color, count, secret];
+}
+
+class CounterWithDailyReadDto extends CounterReadDto {
+  /// Expresses how many counts have been done today
+  final int dailyCount;
+
+  const CounterWithDailyReadDto({
+    required this.dailyCount,
+    required id,
+    required name,
+    required count,
+    required color,
+    required history,
+    required secret,
+  }) : super(
+    id: id,
+    name: name,
+    count: count,
+    color: color,
+    secret: secret,
+    history: history,
+  );
+
+  static CounterWithDailyReadDto from({required int dailyCount, required CounterReadDto count}) {
+    return CounterWithDailyReadDto(
+      dailyCount: dailyCount,
+      id: count.id,
+      name: count.name,
+      count: count.count,
+      color: count.color,
+      history: count.history,
+      secret: count.secret,
+    );
+  }
 }

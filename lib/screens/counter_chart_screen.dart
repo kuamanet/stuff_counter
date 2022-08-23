@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kcounter/counters/actions/group_counter_logs.dart';
 import 'package:kcounter/counters/core/counter_logger.dart';
+import 'package:kcounter/counters/entities/counter_read_dto.dart';
 import 'package:kcounter/extensions/color.dart';
 import 'package:kcounter/extensions/context.dart';
 import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
@@ -78,7 +79,13 @@ class _CounterChartScreenState extends ConsumerState<CounterChartScreen> {
                 ],
               ),
               const SizedBox(height: CountersSpacing.space600),
-              CounterDetails(counter: counter),
+              CounterDetails(
+                  counter: (counter is CounterWithDailyReadDto)
+                      ? counter
+                      : CounterWithDailyReadDto.from(
+                          dailyCount: 0,
+                          count: counter,
+                        )),
               const SizedBox(height: CountersSpacing.space600),
               Wrap(
                 // TODO try to make this a row

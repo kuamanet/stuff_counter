@@ -9,7 +9,7 @@ enum AppRouteName {
 }
 
 class AppRoute {
-  final CounterReadDto? currentCounter;
+  final CounterWithDailyReadDto? currentCounter;
   final AppRouteName name;
 
   const AppRoute({

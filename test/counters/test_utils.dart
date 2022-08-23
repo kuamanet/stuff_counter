@@ -43,3 +43,9 @@ CounterReadDto readEmptyCounter({String id = "id", int count = 0, history = cons
     history: history,
   );
 }
+
+CounterWithDailyReadDto readEmptyDailyCounter(
+    {String id = "id", int count = 0, history = const <CounterLog>[]}) {
+  final empty = readEmptyCounter(id: id, count: count, history: history);
+  return CounterWithDailyReadDto.from(dailyCount: 0, count: empty);
+}
