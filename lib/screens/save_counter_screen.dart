@@ -29,7 +29,7 @@ class _SaveCounterScreenState extends ConsumerState<SaveCounterScreen> {
   bool isLoading = false;
   Color? counterColor;
   bool secretCounter = false;
-  CounterReadDto? counter;
+  CounterWithDailyReadDto? counter;
 
   @override
   void initState() {
@@ -156,6 +156,9 @@ class _SaveCounterScreenState extends ConsumerState<SaveCounterScreen> {
       );
 
       final router = ref.read(routeProvider.notifier);
+      if (!mounted) {
+        return;
+      }
       context.snack("Counter ${nameController.text} was created 🚀🚀🚀🚀");
       router.toDashboardPage();
     } catch (error, stacktrace) {
@@ -178,6 +181,9 @@ class _SaveCounterScreenState extends ConsumerState<SaveCounterScreen> {
       );
 
       final router = ref.read(routeProvider.notifier);
+      if (!mounted) {
+        return;
+      }
       context.snack("Counter ${nameController.text} was updated 🚀🚀🚀🚀");
 
       final readAction = ref.read(readCounterActionProvider);

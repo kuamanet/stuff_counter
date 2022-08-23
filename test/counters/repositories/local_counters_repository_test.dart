@@ -15,13 +15,9 @@ void main() {
     ref = CollectionRefMock();
     document = DocumentRefMock();
 
-    when(() {
-      return ref.doc();
-    }).thenReturn(document);
+    when(() => ref.doc()).thenReturn(document);
 
-    when(() {
-      return localDatabase.collection(any());
-    }).thenReturn(ref);
+    when(() => localDatabase.collection(any())).thenReturn(ref);
 
     repo = LocalCountersRepository(localDatabase);
   });

@@ -12,7 +12,7 @@ import 'package:kcounter/widgets/counter_card_chart.dart';
 import 'package:kcounter/widgets/counter_details.dart';
 
 class CounterCard extends ConsumerWidget {
-  final CounterReadDto counter;
+  final CounterWithDailyReadDto counter;
 
   const CounterCard({Key? key, required this.counter}) : super(key: key);
 

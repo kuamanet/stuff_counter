@@ -21,7 +21,7 @@ void main() {
     final action = GetCounter(countersRepository: repo);
     final result = await action.run(id);
 
-    expect(result, equals(mockCounter));
+    expect(result, equals(readEmptyDailyCounter(id: id)));
     verify(() => repo.getOne(id));
   });
 }

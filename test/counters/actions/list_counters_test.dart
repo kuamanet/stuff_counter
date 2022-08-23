@@ -25,7 +25,7 @@ void main() {
     expect(
         action.run(ListCountersParams(showSecretCounters: false)),
         emitsInOrder([
-          equals([mockCounter]),
+          equals([readEmptyDailyCounter()]),
           emitsDone
         ]));
     verify(() => repo.getAll());

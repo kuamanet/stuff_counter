@@ -14,14 +14,14 @@ class AppRouteNotifier extends StateNotifier<AppRoute> {
 
   void toSettingsPage() => state = const AppRoute(name: AppRouteName.settings);
 
-  void toGraphPage(CounterReadDto counter) {
+  void toGraphPage(CounterWithDailyReadDto counter) {
     state = AppRoute(
       name: AppRouteName.graph,
       currentCounter: counter,
     );
   }
 
-  void toUpdatePage(CounterReadDto counter) {
+  void toUpdatePage(CounterWithDailyReadDto counter) {
     state = AppRoute(
       name: AppRouteName.update,
       currentCounter: counter,

@@ -7,7 +7,7 @@ import 'package:kcounter/widgets/counter_card.dart';
 import 'package:kcounter/widgets/user_greeting.dart';
 import 'package:kcounter/widgets/zero_counters.dart';
 
-class CountersListStreamBuilder extends StreamBuilder<List<CounterReadDto>> {
+class CountersListStreamBuilder extends StreamBuilder<List<CounterWithDailyReadDto>> {
   final ListCounters action;
   final bool? showSecretCounters;
 

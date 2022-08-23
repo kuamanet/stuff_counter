@@ -7,7 +7,7 @@ import 'package:kcounter/riverpod_providers/riverpod_providers.dart';
 import 'package:kcounter/widgets/counter_chart.dart';
 
 class CounterCardChart extends ConsumerWidget {
-  final CounterReadDto counter;
+  final CounterWithDailyReadDto counter;
   const CounterCardChart({
     required this.counter,
     Key? key,
