@@ -33,8 +33,6 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('@drawable/ic_stat_name');
 
-/// Note: permissions aren't requested here just to demonstrate that can be
-/// done later
 const IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
   requestAlertPermission: false,
   requestBadgePermission: false,
